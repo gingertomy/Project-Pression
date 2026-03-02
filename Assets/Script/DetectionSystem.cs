@@ -72,5 +72,7 @@ public class DetectionSystem : MonoBehaviour
     public void Injured()
     {
         IsInjured = true;
+        StopDetection();
+        Debug.Log("STOP");
     }
 }
