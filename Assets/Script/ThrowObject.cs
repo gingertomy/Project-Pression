@@ -47,7 +47,7 @@ public class ThrowObject : MonoBehaviour
         if (objectToThrow.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             rb.isKinematic = false;
-            rb.velocity = Vector3.zero; 
+            rb.linearVelocity = Vector3.zero; 
 
             
             Vector3 forceDirection = _interactObject.playerCamera.transform.forward;

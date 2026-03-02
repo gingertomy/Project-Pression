@@ -29,15 +29,16 @@ public class InteractionObject : MonoBehaviour
     private InteractionType currentType;
     private bool isHandOccupied = false;
 
+    // --- ÉVÉNEMENTS ---
     public event Action<GameObject> OnCokePicked;
     public event Action<GameObject> OnPaperPicked;
-
+    public event Action<GameObject> OnHover;     // Pour l'Outline
+    public event Action<GameObject> OnNoHover;   // Pour l'Outline
 
     enum InteractionType { None, Coke, Paper }
 
     private void Start()
     {
-        // Initialisation de l'état des UIs
         if (interactionUI != null) interactionUI.alpha = 0f;
         if (radialProgress != null) radialProgress.fillAmount = 0f;
         if (handsFull != null) handsFull.alpha = 0f;
@@ -52,7 +53,6 @@ public class InteractionObject : MonoBehaviour
 
     void CheckLook()
     {
-        // Raycast depuis le centre de la vue caméra
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
@@ -62,30 +62,40 @@ public class InteractionObject : MonoBehaviour
 
             if (hitType != InteractionType.None)
             {
-                currentInteractable = hit.collider.gameObject;
-                currentType = hitType;
-                isLookingAtObject = true;
+                GameObject hitObject = hit.collider.gameObject;
 
-                // --- GESTION DE L'AFFICHAGE SELON L'ÉTAT DES MAINS ---
+                // GESTION DU CHANGEMENT D'OBJET (HOVER)
+                if (currentInteractable != hitObject)
+                {
+                    // Éteindre l'outline de l'ancien objet
+                    if (currentInteractable != null) OnNoHover?.Invoke(currentInteractable);
+
+                    currentInteractable = hitObject;
+                    currentType = hitType;
+                    isLookingAtObject = true;
+
+                    // Allumer l'outline du nouvel objet (seulement si mains libres)
+                    if (!isHandOccupied) OnHover?.Invoke(currentInteractable);
+                }
+
+                // GESTION DE L'AFFICHAGE UI
                 if (isHandOccupied)
                 {
-                    
                     if (handsFull != null) handsFull.alpha = 1f;
                     if (interactionUI != null) interactionUI.alpha = 0f;
-                    if (crosshair != null) crosshair.alpha = 1f; 
+                    if (crosshair != null) crosshair.alpha = 1f;
                 }
                 else
                 {
-                    
                     if (handsFull != null) handsFull.alpha = 0f;
                     if (interactionUI != null) interactionUI.alpha = 1f;
-                    if (crosshair != null) crosshair.alpha = 0f; 
+                    if (crosshair != null) crosshair.alpha = 0f;
                 }
                 return;
             }
         }
 
-     
+        // Si on ne regarde plus rien
         if (isLookingAtObject)
         {
             StopLooking();
@@ -94,11 +104,13 @@ public class InteractionObject : MonoBehaviour
 
     void StopLooking()
     {
+        // Éteindre l'outline avant de perdre la référence
+        if (currentInteractable != null) OnNoHover?.Invoke(currentInteractable);
+
         isLookingAtObject = false;
         currentInteractable = null;
         currentType = InteractionType.None;
 
-        // On remet tout par défaut
         if (interactionUI != null) interactionUI.alpha = 0f;
         if (crosshair != null) crosshair.alpha = 1f;
         if (handsFull != null) handsFull.alpha = 0f;
@@ -115,7 +127,6 @@ public class InteractionObject : MonoBehaviour
 
     void HandleInput()
     {
-       
         if (isHandOccupied || !isLookingAtObject || currentInteractable == null) return;
 
         if (Keyboard.current[focusKey].isPressed)
@@ -143,19 +154,18 @@ public class InteractionObject : MonoBehaviour
         {
             GameObject obj = currentInteractable;
 
-            
+            // DÉSACTIVER L'OUTLINE AU RAMASSAGE
+            OnNoHover?.Invoke(obj);
+
             if (obj.TryGetComponent<Rigidbody>(out Rigidbody rb)) rb.isKinematic = true;
             if (obj.TryGetComponent<Collider>(out Collider col)) col.enabled = false;
 
-            
             obj.transform.SetParent(handTransform);
             StartCoroutine(MoveToHandRoutine(obj));
 
-           
             if (currentType == InteractionType.Coke) OnCokePicked?.Invoke(obj);
             else if (currentType == InteractionType.Paper) OnPaperPicked?.Invoke(obj);
 
-            
             isHandOccupied = true;
             StopLooking();
         }
@@ -163,7 +173,6 @@ public class InteractionObject : MonoBehaviour
 
     IEnumerator MoveToHandRoutine(GameObject obj)
     {
-        // Animation fluide vers la position locale (0,0,0) de l'objet handTransform
         while (obj != null && Vector3.Distance(obj.transform.localPosition, Vector3.zero) > 0.005f)
         {
             obj.transform.localPosition = Vector3.Lerp(obj.transform.localPosition, Vector3.zero, Time.deltaTime * lerpSpeed);
@@ -188,7 +197,6 @@ public class InteractionObject : MonoBehaviour
     public void SetHandFree()
     {
         isHandOccupied = false;
-       
         if (crosshair != null) crosshair.alpha = 1f;
     }
 }
