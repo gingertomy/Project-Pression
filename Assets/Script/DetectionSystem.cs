@@ -6,6 +6,7 @@ public class DetectionSystem : MonoBehaviour
     
     [SerializeField] InteractionObject interactObject;
     [SerializeField] ThermometrePression thermometrePression;
+    //[SerializeField] private GameObject Employee;
     //temps entre les verif
     public float MinDelay = 5f;
     public float MaxDelay = 15f;
@@ -47,16 +48,18 @@ public class DetectionSystem : MonoBehaviour
         float verificationTime= Random.Range(MinVerificationTime, MaxVerificationTime + 1);
         float timer = 0f;
         Debug.Log(verificationTime);
+        GetComponent<MeshRenderer>().material.color = Color.red;
         while (timer < verificationTime)
         {
             timer += Time.deltaTime;
             Debug.Log("regarde");
-            if (!interactObject.isObjectHidden)
+            if (!interactObject.isObjectHidden && interactObject.isHandOccupied)
             {
                 thermometrePression.AugmenterPression();
             }
             yield return null;
         }
+        GetComponent<MeshRenderer>().material.color = Color.white;
         Debug.Log("fin de verification");
     }
 
@@ -82,6 +85,7 @@ public class DetectionSystem : MonoBehaviour
         IsInjured = true;
         StopDetection();
         Debug.Log("STOP");
+        GetComponent<MeshRenderer>().material.color = Color.green;
         StartCoroutine(StunnedEmployee());
     }
 
@@ -91,5 +95,6 @@ public class DetectionSystem : MonoBehaviour
         StartDetection();
         Debug.Log("STUN");
         IsInjured = false;
+        GetComponent<MeshRenderer>().material.color = Color.white;
     }
 }

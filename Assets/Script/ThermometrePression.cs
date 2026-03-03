@@ -66,7 +66,11 @@ public class ThermometrePression : MonoBehaviour
     // APPELS FUTURS DU PLAYER
     // =========================
 
-    public void AugmenterPression() => ModifierPression(cranAugmentation);
+    public void AugmenterPression()
+    {
+        ModifierPression(cranAugmentation);
+        Debug.Log("PRESSION AUGMENTE");
+    }
     public void DiminuerPression() => ModifierPression(-cranDiminution);
     public void AugmenterPression(float valeur) => ModifierPression(valeur);
     public void DiminuerPression(float valeur) => ModifierPression(-valeur);
