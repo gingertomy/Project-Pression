@@ -122,6 +122,7 @@ public class Work : MonoBehaviour
 
     private void TriggerPression()
     {
+        _workValue = 10f;
         Debug.Log("GAME OVER");
         
         BossArrival?.Invoke();
