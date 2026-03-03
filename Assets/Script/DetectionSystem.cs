@@ -3,6 +3,9 @@ using System.Collections;
 
 public class DetectionSystem : MonoBehaviour
 {
+    
+    [SerializeField] InteractionObject interactObject;
+    [SerializeField] ThermometrePression thermometrePression;
     //temps entre les verif
     public float MinDelay = 5f;
     public float MaxDelay = 15f;
@@ -10,8 +13,11 @@ public class DetectionSystem : MonoBehaviour
     //temps pendant les vérifs
     public float MinVerificationTime = 1f;
     public float MaxVerificationTime = 3f;
-
+    
+    //temps stuned
+    public float StunedTime = 3f;
     public bool IsInjured = false;
+    
     
     // récupérer variable du joueur : si il travaille ou si il fait des betises
     // récupérer variable du joueur : variable qui illustre le nombre de fois qu'il a embêté des gens. Si beaucoup, alors fréquence augmente
@@ -45,8 +51,10 @@ public class DetectionSystem : MonoBehaviour
         {
             timer += Time.deltaTime;
             Debug.Log("regarde");
-            // if (il fait des bêtises)
-            // fonction qui augmente la jauge
+            if (!interactObject.isObjectHidden)
+            {
+                thermometrePression.AugmenterPression();
+            }
             yield return null;
         }
         Debug.Log("fin de verification");
@@ -74,5 +82,13 @@ public class DetectionSystem : MonoBehaviour
         IsInjured = true;
         StopDetection();
         Debug.Log("STOP");
+        StartCoroutine(StunnedEmployee());
+    }
+
+    IEnumerator StunnedEmployee()
+    {
+        yield return new WaitForSeconds(StunedTime);
+        StartDetection();
+        Debug.Log("STUN");
     }
 }
