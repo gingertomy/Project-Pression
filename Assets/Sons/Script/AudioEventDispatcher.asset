@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioDispatcher
   _audioClips:
   - audioType: 1
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 2304b8f54d22772418691f0261559924, type: 3}
   - audioType: 2
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 78e5f9ff5d90b1149a9fce8504e735d9, type: 3}
   - audioType: 3
     audioClip: {fileID: 0}
   - audioType: 4
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 4383f8861200a684aaee387c112468f5, type: 3}

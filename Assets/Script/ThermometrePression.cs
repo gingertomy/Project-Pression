@@ -42,11 +42,12 @@ public class ThermometrePression : MonoBehaviour
     [Header("DEBUG éditeur")]
     [SerializeField, Range(0f, 1f)] float previewPression = 0f;
 
+    [Header("Références")]
     [SerializeField] private Work _workReference;
-    [SerializeField] private PeopleHit _peopleHitReference;
+    [SerializeField] private PeopleHit[] _peopleHitReference; // Tableau d'ennemis
 
-    int palierActuel = -1;
-    bool gameOverDeclenche;
+    private int palierActuel = -1;
+    private bool gameOverDeclenche;
     private bool isWorking = false;
 
     private Vector3 cameraInitialLocalPos;
@@ -56,10 +57,14 @@ public class ThermometrePression : MonoBehaviour
     {
         if (cameraTransform != null)
             cameraInitialLocalPos = cameraTransform.localPosition;
+
+        // Initialisation de la vignette à 0
+        MettreAJourVignette();
     }
 
     private void OnEnable()
     {
+        // Abonnement au script Work
         if (_workReference != null)
         {
             _workReference.StartWorking += StartAiguille;
@@ -67,8 +72,15 @@ public class ThermometrePression : MonoBehaviour
             _workReference.BossArrival += AugmenterPression;
         }
 
+        // Abonnement à TOUS les PeopleHit du tableau
         if (_peopleHitReference != null)
-            _peopleHitReference.OnPlayerHit += DiminuerPression;
+        {
+            foreach (PeopleHit person in _peopleHitReference)
+            {
+                if (person != null)
+                    person.OnPlayerHit += DiminuerPression;
+            }
+        }
     }
 
     private void OnDisable()
@@ -81,16 +93,24 @@ public class ThermometrePression : MonoBehaviour
         }
 
         if (_peopleHitReference != null)
-            _peopleHitReference.OnPlayerHit -= DiminuerPression;
+        {
+            foreach (PeopleHit person in _peopleHitReference)
+            {
+                if (person != null)
+                    person.OnPlayerHit -= DiminuerPression;
+            }
+        }
     }
 
     void Update()
     {
         if (gameOverDeclenche) return;
 
+        // Si on travaille, la pression monte fluidement
         if (isWorking)
             ModifierPression(augmentationPassiveParSeconde * Time.deltaTime);
 
+        // Mise à jour constante des effets visuels
         MettreAJourCameraShake();
     }
 
@@ -116,6 +136,7 @@ public class ThermometrePression : MonoBehaviour
     public void DiminuerPression()
     {
         ModifierPression(-cranDiminution);
+        Debug.Log("PRESSION DIMINUE");
     }
 
     // =========================
@@ -140,7 +161,6 @@ public class ThermometrePression : MonoBehaviour
     void MettreAJourAiguille()
     {
         if (aiguille == null) return;
-
         float angle = Mathf.Lerp(angleMin, angleMax, pression);
         aiguille.localRotation = Quaternion.Euler(0, 0, angle);
     }
@@ -149,6 +169,7 @@ public class ThermometrePression : MonoBehaviour
     {
         if (vignetteImage == null) return;
 
+        // Utilise la courbe pour définir l'alpha
         float intensite = vignetteCurve.Evaluate(pression) * vignetteAlphaMax;
 
         Color c = vignetteImage.color;
@@ -160,6 +181,7 @@ public class ThermometrePression : MonoBehaviour
     {
         if (cameraTransform == null) return;
 
+        // L'intensité du shake dépend de la courbe de pression
         float intensite = shakeCurve.Evaluate(pression) * shakeAmplitudeMax;
 
         if (intensite <= 0.001f)
@@ -170,11 +192,11 @@ public class ThermometrePression : MonoBehaviour
 
         shakeTime += Time.deltaTime * shakeFrequency;
 
+        // Génération de bruit de Perlin pour un mouvement organique
         float offsetX = (Mathf.PerlinNoise(shakeTime, 0f) - 0.5f) * 2f;
         float offsetY = (Mathf.PerlinNoise(0f, shakeTime) - 0.5f) * 2f;
 
         Vector3 offset = new Vector3(offsetX, offsetY, 0f) * intensite;
-
         cameraTransform.localPosition = cameraInitialLocalPos + offset;
     }
 
@@ -187,20 +209,12 @@ public class ThermometrePression : MonoBehaviour
             if (pression >= seuilsPaliers[i] && i > palierActuel)
             {
                 palierActuel = i;
-
                 if (feedbackParPalier != null && i < feedbackParPalier.Length)
                     feedbackParPalier[i]?.Invoke();
             }
         }
     }
 
-    private void StartAiguille()
-    {
-        isWorking = true;
-    }
-
-    private void StopAiguille()
-    {
-        isWorking = false;
-    }
+    private void StartAiguille() => isWorking = true;
+    private void StopAiguille() => isWorking = false;
 }
