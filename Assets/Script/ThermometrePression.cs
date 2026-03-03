@@ -33,11 +33,7 @@ public class ThermometrePression : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float vignetteAlphaMax = 0.75f;
     [SerializeField] private AnimationCurve vignetteCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    [Header("Camera Shake")]
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private float shakeAmplitudeMax = 0.08f;
-    [SerializeField] private float shakeFrequency = 18f;
-    [SerializeField] private AnimationCurve shakeCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    
 
     [Header("DEBUG éditeur")]
     [SerializeField, Range(0f, 1f)] float previewPression = 0f;
@@ -57,8 +53,6 @@ public class ThermometrePression : MonoBehaviour
 
     void Start()
     {
-        if (cameraTransform != null)
-            cameraInitialLocalPos = cameraTransform.localPosition;
 
         // Initialisation de la vignette à 0
         MettreAJourVignette();
@@ -113,7 +107,7 @@ public class ThermometrePression : MonoBehaviour
             ModifierPression(augmentationPassiveParSeconde * Time.deltaTime);
 
         // Mise à jour constante des effets visuels
-        MettreAJourCameraShake();
+        
     }
 
     void OnValidate()
@@ -182,28 +176,7 @@ public class ThermometrePression : MonoBehaviour
         vignetteImage.color = c;
     }
 
-    void MettreAJourCameraShake()
-    {
-        if (cameraTransform == null) return;
-
-        // L'intensité du shake dépend de la courbe de pression
-        float intensite = shakeCurve.Evaluate(pression) * shakeAmplitudeMax;
-
-        if (intensite <= 0.001f)
-        {
-            cameraTransform.localPosition = cameraInitialLocalPos;
-            return;
-        }
-
-        shakeTime += Time.deltaTime * shakeFrequency;
-
-        // Génération de bruit de Perlin pour un mouvement organique
-        float offsetX = (Mathf.PerlinNoise(shakeTime, 0f) - 0.5f) * 2f;
-        float offsetY = (Mathf.PerlinNoise(0f, shakeTime) - 0.5f) * 2f;
-
-        Vector3 offset = new Vector3(offsetX, offsetY, 0f) * intensite;
-        cameraTransform.localPosition = cameraInitialLocalPos + offset;
-    }
+   
 
     void VerifierPaliers()
     {
