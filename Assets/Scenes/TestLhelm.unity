@@ -142,18 +142,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61181965}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.11320321, w: 0.9935719}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.9847229, y: 3.4658804, z: 3.4658804}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2010446621}
   m_Father: {fileID: 1930853943}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -201.612}
   m_AnchorMin: {x: 0.029000001, y: 0.10070371}
   m_AnchorMax: {x: 0.08254168, y: 0.19566667}
-  m_AnchoredPosition: {x: 119.1, y: 92.1}
-  m_SizeDelta: {x: -47.3, y: 0}
+  m_AnchoredPosition: {x: 99.7, y: 47.7}
+  m_SizeDelta: {x: -44.59999, y: -35.899982}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &467969520
 GameObject:
@@ -649,15 +649,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ThermometrePression
   aiguille: {fileID: 61181966}
-  angleMin: 0
-  angleMax: -180
+  angleMin: 13
+  angleMax: -201
   pression: 0
   augmentationPassiveParSeconde: 0.02
   cranAugmentation: 0.1
   cranDiminution: 0.15
-  nombrePaliers: 5
-  onPalierAtteint:
-    m_PersistentCalls:
+  seuilsPaliers:
+  - 0.15
+  - 0.33
+  - 0.49
+  - 0.64
+  - 0.81
+  - 1
+  feedbackParPalier:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
@@ -674,6 +708,7 @@ MonoBehaviour:
   onGameOver:
     m_PersistentCalls:
       m_Calls: []
+  previewPression: 0
 --- !u!114 &1652670207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,7 +729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 645ca4affba0c2a47853260eaa09f4e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5dd8f674532d8ef44814a2e476c2cc0c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -879,16 +914,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2010446620}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.072497174, w: 0.99736863}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.09952435, y: 0.06648754, z: 0.09958379}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 61181966}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.027, y: 0.10070371}
-  m_AnchorMax: {x: 0.08254168, y: 0.19566667}
-  m_AnchoredPosition: {x: -4.2374344, y: -62.760574}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -4.756}
+  m_AnchorMin: {x: 0.027, y: 0.24839206}
+  m_AnchorMax: {x: 0.027, y: 0.32760796}
+  m_AnchoredPosition: {x: -1.8, y: -3.39}
   m_SizeDelta: {x: 97.3575, y: 90.76384}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2010446622
@@ -911,7 +946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7a76cff116aabd145ab7f4b09bb8442d, type: 3}
+  m_Sprite: {fileID: 130859899, guid: 7a76cff116aabd145ab7f4b09bb8442d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
