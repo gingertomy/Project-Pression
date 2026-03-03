@@ -54,14 +54,20 @@ public class Horloge3DCrans : MonoBehaviour
                 Debug.Log("Cran atteint : " + i + " | Angle : " + angleActuel.ToString("F1"));
                 onCranAtteint.Invoke(i);
 
-                // vérifier la victoire séparément
                 if (!victoireAtteinte && angleActuel >= angleVictoire)
                 {
                     victoireAtteinte = true;
+
+                    // Libère le curseur pour que le joueur puisse cliquer les boutons
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+
                     if (VictoryPanel != null)
                         VictoryPanel.SetActive(true);
+                    onVictoire.Invoke();
+                }
+
                 }
             }
         }
     }
-}

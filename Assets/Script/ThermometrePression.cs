@@ -150,10 +150,16 @@ public class ThermometrePression : MonoBehaviour
         if (pression >= 1f && !gameOverDeclenche)
         {
             gameOverDeclenche = true;
+
+            // Libère le curseur pour que le joueur puisse cliquer les boutons
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             if (GameOverPanel != null)
                 GameOverPanel.SetActive(true);
             onGameOver.Invoke();
         }
+
 
     }
 
