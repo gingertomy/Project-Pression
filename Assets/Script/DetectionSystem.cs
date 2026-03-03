@@ -60,7 +60,7 @@ public class DetectionSystem : MonoBehaviour
         float timer = 0f;
         Debug.Log(verificationTime);
         GetComponent<MeshRenderer>().material.color = Color.red;
-        _InterrogationAnimator.SetTrigger("Interrogation");
+        _InterrogationAnimator.SetTrigger("InDetection");
         while (timer < verificationTime)
         {
             timer += Time.deltaTime;
@@ -68,7 +68,7 @@ public class DetectionSystem : MonoBehaviour
             if (!interactObject.isObjectHidden && interactObject.isHandOccupied)
             {  
                 thermometrePression.AugmenterPression();
-                _AttentionAnimator.SetTrigger("Attention");// je sais pas si ca va marcher
+                _AttentionAnimator.SetTrigger("Detected");// je sais pas si ca va marcher
             }
             yield return null;
         }
