@@ -5,7 +5,6 @@ public enum AudioType
 {
     None,
     Throw,
-    Hit,
     Grab,
     Ranger
 

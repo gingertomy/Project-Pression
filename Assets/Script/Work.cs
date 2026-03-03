@@ -13,6 +13,7 @@ public class Work : MonoBehaviour
     [SerializeField] private float _autoWorkSpeed = 2f;
     [SerializeField] private MoveCamera _moveCamera;
     [SerializeField] private GameObject _textWork;
+    [SerializeField] private AudioSource _audioSource;
 
     private bool _isWorkingAutomatically = false;
     private bool _isCameraHigh = false; // Nouvelle condition
@@ -75,6 +76,7 @@ public class Work : MonoBehaviour
             if (!_isWorkingAutomatically)
             {
                 _isWorkingAutomatically = true;
+                _audioSource.Play();
                 StartWorking?.Invoke();
                 _textWork.SetActive(true);
                 Debug.Log("Travail ON : Caméra basse, l'aiguille monte.");
@@ -88,6 +90,7 @@ public class Work : MonoBehaviour
             if (_isWorkingAutomatically)
             {
                 _isWorkingAutomatically = false;
+                _audioSource.Pause();
                 StopWorking?.Invoke();
                 _textWork.SetActive(false);
                 Debug.Log("Travail OFF : Caméra haute ou mains prises.");

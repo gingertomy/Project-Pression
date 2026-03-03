@@ -4,7 +4,7 @@ using UnityEngine;
 public class PeopleHit : MonoBehaviour
 {
     [SerializeField] DetectionSystem detectionSystem;
-    [SerializeField] AudioDispatcher _audioDispatcher;
+    [SerializeField] AudioSource _audioSource;
     public int NbHit = 0;
     
     public event Action OnPlayerHit;
@@ -19,7 +19,7 @@ public class PeopleHit : MonoBehaviour
         if (collision.gameObject.CompareTag("Coke") || collision.gameObject.CompareTag("Paper"))
         {
             Debug.Log("Le joueur a touché l'objet : " + gameObject.name);
-            _audioDispatcher.PlayAudio(AudioType.Hit);
+            _audioSource.Play();
             OnPlayerHit?.Invoke();
             detectionSystem.Injured();
             NbHit++;

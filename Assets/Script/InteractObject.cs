@@ -38,6 +38,7 @@ public class InteractionObject : MonoBehaviour
     public bool isHandOccupied = false;
     public bool isObjectHidden = false;
     private GameObject objectInInventory;
+    [SerializeField] private AudioDispatcher _audioDispatcher;
 
     
     public event Action<GameObject> OnCokePicked;
@@ -79,7 +80,7 @@ public class InteractionObject : MonoBehaviour
 
             if (isObjectHidden)
             {
-                
+                _audioDispatcher.PlayAudio(AudioType.Ranger);
                 objectInInventory.SetActive(false);
                 if (_placeholderIcon != null) _placeholderIcon.alpha = 1f;
 
@@ -91,7 +92,7 @@ public class InteractionObject : MonoBehaviour
             }
             else
             {
-               
+               _audioDispatcher.PlayAudio(AudioType.Ranger);
                 if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
                 if (_cokeIcon != null) _cokeIcon.alpha = 0f;
                 if (_paperIcon != null) _paperIcon.alpha = 0f;
@@ -191,6 +192,7 @@ public class InteractionObject : MonoBehaviour
     {
         if (!isHandOccupied)
         {
+            _audioDispatcher.PlayAudio(AudioType.Grab);
             GameObject obj = currentInteractable;
             OnNoHover?.Invoke(obj);
 
