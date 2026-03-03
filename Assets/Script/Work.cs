@@ -1,77 +1,106 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Work : MonoBehaviour
 {
-    [SerializeField] private InteractionObject _interactionObject; // Référence au script d'interaction
+    [SerializeField] private InteractionObject _interactionObject;
 
+    [Header("Work Stats")]
     [SerializeField] private float _workValue = 10f;
     [SerializeField] private float _decaySpeed = 1f;
     [SerializeField] private float _initialWorkValue = 10f;
-    [SerializeField] private float _startDelay = 5f;
-    private float _currentDelay = 0f;
+    [SerializeField] private float _autoWorkSpeed = 2f;
+
+    private bool _isWorkingAutomatically = false;
+    
 
     public Image workRadialImage;
+
+    
+    public event Action StartWorking;
+    public event Action StopWorking;
+    public event Action BossArrival;
 
     private void Start()
     {
         _workValue = _initialWorkValue;
-        _currentDelay = _startDelay;
 
-        // Si la référence n'est pas mise dans l'inspecteur, on essaie de la trouver
         if (_interactionObject == null)
             _interactionObject = FindFirstObjectByType<InteractionObject>();
     }
 
     private void Update()
     {
-        // Logique de décrémentation (inchangée)
-        if (_currentDelay > 0)
+        
+
+        HandleAutomaticWork();
+        HandleUI();
+    }
+
+    private void HandleAutomaticWork()
+    {
+        bool canWork = (_interactionObject != null) &&
+                       (!_interactionObject.isHandOccupied || _interactionObject.isObjectHidden);
+
+        if (canWork)
         {
-            _currentDelay -= Time.deltaTime;
+            if (!_isWorkingAutomatically)
+            {
+                _isWorkingAutomatically = true;
+                StartWorking?.Invoke();
+                Debug.Log("Travail ON : L'aiguille monte.");
+            }
+
+           
+            _workValue = Mathf.MoveTowards(_workValue, _initialWorkValue, _autoWorkSpeed * Time.deltaTime);
         }
-        else if (_workValue > 0)
+        else
         {
+            if (_isWorkingAutomatically)
+            {
+                _isWorkingAutomatically = false;
+                StopWorking?.Invoke();
+                Debug.Log("Travail OFF : L'aiguille s'arrête.");
+            }
+
+            
             _workValue -= _decaySpeed * Time.deltaTime;
         }
 
         _workValue = Mathf.Max(_workValue, 0);
 
+        
+        if (_workValue <= 0f)
+        {
+            TriggerPression();
+        }
+    }
+
+    private void HandleUI()
+    {
         if (workRadialImage != null)
         {
             float ratio = _workValue / _initialWorkValue;
             workRadialImage.fillAmount = 1f - ratio;
             workRadialImage.color = Color.Lerp(Color.green, Color.red, workRadialImage.fillAmount);
         }
+    }
+
+    private void TriggerPression()
+    {
+        
+
+        Debug.Log("GAME OVER");
 
         
-        if (Input.anyKeyDown)
-        {
-            
-            if (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1) && !Input.GetKeyDown(KeyCode.E) && !Input.GetKeyDown(KeyCode.R))
-            { 
-                if (_interactionObject != null)
-                {
-                    bool canWork = !_interactionObject.isObjectHidden && _interactionObject.isHandOccupied == false
-                                   || _interactionObject.isObjectHidden;
+        enabled = false;
 
-                    if (canWork)
-                    {
-                        _workValue = _initialWorkValue;
-                        _currentDelay = _startDelay;
-                        Debug.Log("Travail en cours...");
-                    }
-                    else
-                    {
-                        Debug.Log("Impossible de travailler : vous avez un objet en main !");
-                    }
-                }
-            }
-        }
+        
+        Time.timeScale = 0f;
 
-        if (_workValue <= 0)
-        {
-            Debug.Log("Vous vous êtes endormi au travail...");
-        }
+       
+        // - Activer un panel UI GameOver
+       
     }
 }

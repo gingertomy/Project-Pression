@@ -31,19 +31,41 @@ public class ThermometrePression : MonoBehaviour
     [Header("DEBUG éditeur")]
     [SerializeField, Range(0f, 1f)] float previewPression = 0f;
 
+    [SerializeField] private Work _workReference;
+    [SerializeField] private PeopleHit _peopleHitReference;
+
+
     int palierActuel = -1;
     bool gameOverDeclenche;
+    private bool isWorking = false;
 
-    void Start()
+
+
+    private void OnEnable()
     {
-        MettreAJourAiguille();
+        _workReference.StartWorking += StartAiguille;
+        _workReference.StopWorking += StopAiguille;
+        _peopleHitReference.OnPlayerHit += DiminuerPression;
+        _workReference.BossArrival += AugmenterPression;
+
+    }
+    private void OnDisable()
+    {
+        _workReference.StartWorking -= StartAiguille;
+        _workReference.StopWorking -= StopAiguille;
+        _peopleHitReference.OnPlayerHit += DiminuerPression;
+        _workReference.BossArrival -= AugmenterPression;
     }
 
     void Update()
     {
         if (gameOverDeclenche) return;
-        ModifierPression(augmentationPassiveParSeconde * Time.deltaTime);
+        if (isWorking)
+        {
+            ModifierPression(augmentationPassiveParSeconde * Time.deltaTime);
+        }
     }
+
 
     void OnValidate()
     {
@@ -62,6 +84,8 @@ public class ThermometrePression : MonoBehaviour
         }
     }
 
+    
+
     // =========================
     // APPELS FUTURS DU PLAYER
     // =========================
@@ -72,8 +96,8 @@ public class ThermometrePression : MonoBehaviour
         Debug.Log("PRESSION AUGMENTE");
     }
     public void DiminuerPression() => ModifierPression(-cranDiminution);
-    public void AugmenterPression(float valeur) => ModifierPression(valeur);
-    public void DiminuerPression(float valeur) => ModifierPression(-valeur);
+    //public void AugmenterPression(float valeur) => ModifierPression(valeur);
+    //public void DiminuerPression(float valeur) => ModifierPression(-valeur);
 
     // =========================
     // LOGIQUE INTERNE
@@ -82,6 +106,7 @@ public class ThermometrePression : MonoBehaviour
     void ModifierPression(float delta)
     {
         pression = Mathf.Clamp01(pression + delta);
+
         MettreAJourAiguille();
         VerifierPaliers();
 
@@ -127,4 +152,15 @@ public class ThermometrePression : MonoBehaviour
 
         GUI.Box(new Rect(10, 10, 250, 80), texte, style);
     }
+
+    private void StartAiguille()
+    {
+        isWorking = true;
+    }
+    private void StopAiguille()
+    {
+        isWorking = false;
+    }
+
+
 }

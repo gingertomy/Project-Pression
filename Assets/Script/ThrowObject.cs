@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ThrowObject : MonoBehaviour
@@ -61,10 +62,18 @@ public class ThrowObject : MonoBehaviour
             col.enabled = true;
         }
 
-        
+        StartCoroutine(DestroyObject());
+
         _interactObject.SetHandFree();
 
         
         objectToThrow = null;
+    }
+
+
+    IEnumerator DestroyObject()
+    {
+        yield return new WaitForSeconds(5f);
+        if (objectToThrow != null) Destroy(objectToThrow);
     }
 }

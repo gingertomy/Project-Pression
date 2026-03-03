@@ -524,6 +524,7 @@ MonoBehaviour:
   _decaySpeed: 1
   _initialWorkValue: 10
   _startDelay: 5
+  _stopTypingThreshold: 0.5
   workRadialImage: {fileID: 1852598951}
 --- !u!1 &184695946
 GameObject:
@@ -895,6 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed8fb0ae4a22374a83df7c27c02e5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PeopleHit
+  detectionSystem: {fileID: 0}
 --- !u!54 &235247254
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1279,6 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed8fb0ae4a22374a83df7c27c02e5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PeopleHit
+  detectionSystem: {fileID: 0}
 --- !u!54 &581971440
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2489,5 +2492,5 @@ SceneRoots:
   - {fileID: 523218647}
   - {fileID: 184695950}
   - {fileID: 695613043}
-  - {fileID: 581971438}
   - {fileID: 235247252}
+  - {fileID: 581971438}
