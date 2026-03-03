@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 9bbc5e65bf8a53048b9dcd382546ccf4
+guid: f1bbc5979167f664bbc54221ac1d3de7
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: T_Tasse
+    second: {fileID: 2100000, guid: 3f2916e5f3f46a84a842dde7bdcfd78a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
