@@ -46,6 +46,8 @@ public class ThermometrePression : MonoBehaviour
     [SerializeField] private Work _workReference;
     [SerializeField] private PeopleHit[] _peopleHitReference; // Tableau d'ennemis
 
+    [SerializeField] private GameObject GameOverPanel;
+    
     private int palierActuel = -1;
     private bool gameOverDeclenche;
     private bool isWorking = false;
@@ -154,8 +156,11 @@ public class ThermometrePression : MonoBehaviour
         if (pression >= 1f && !gameOverDeclenche)
         {
             gameOverDeclenche = true;
-            onGameOver?.Invoke();
+            if (GameOverPanel != null)
+                GameOverPanel.SetActive(true);
+            onGameOver.Invoke();
         }
+
     }
 
     void MettreAJourAiguille()
