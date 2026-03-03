@@ -6,7 +6,7 @@ public class DetectionSystem : MonoBehaviour
     
     [SerializeField] InteractionObject interactObject;
     [SerializeField] ThermometrePression thermometrePression;
-    //[SerializeField] private GameObject Employee;
+    [SerializeField] PeopleHit _peopleHit;
     //temps entre les verif
     public float MinDelay = 5f;
     public float MaxDelay = 15f;
@@ -18,6 +18,8 @@ public class DetectionSystem : MonoBehaviour
     //temps stuned
     public float StunedTime = 3f;
     public bool IsInjured = false;
+    
+    public int NbHitForLevelUp = 5;
     
     
     // récupérer variable du joueur : si il travaille ou si il fait des betises
@@ -65,9 +67,11 @@ public class DetectionSystem : MonoBehaviour
 
     private void LevelUpDifficulty()
     {
-        // if(il a embeter bcp de gens)
-        MaxDelay -= 1;
-        MaxVerificationTime += 1;
+        if (_peopleHit.NbHit > NbHitForLevelUp)
+        {
+            MaxDelay -= 1;
+            MaxVerificationTime += 1;
+        }
     }
 
     public void StopDetection()
