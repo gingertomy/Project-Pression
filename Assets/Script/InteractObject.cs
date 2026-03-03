@@ -180,7 +180,6 @@ public class InteractionObject : MonoBehaviour
 
     InteractionType GetTypeFromTag(string tag)
     {
-        if (tag == "Coke") return InteractionType.Burger;
         if (tag == "Paper") return InteractionType.Paper;
         if (tag == "Assiette") return InteractionType.Assiette;
             if (tag == "Classeur") return InteractionType.Classeur;
@@ -195,6 +194,7 @@ public class InteractionObject : MonoBehaviour
             if (tag == "Pokeball") return InteractionType.Pokeball;
             if (tag == "Carton") return InteractionType.Carton;
             if (tag == "Chat") return InteractionType.Chat;
+            if (tag == "Burger") return InteractionType.Burger;
 
         return InteractionType.None;
     }
