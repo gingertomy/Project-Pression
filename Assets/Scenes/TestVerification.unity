@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &95479221
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1757,9 +1757,9 @@ MonoBehaviour:
   radialProgress: {fileID: 933884243}
   crosshair: {fileID: 1962105368}
   handsFull: {fileID: 1972185146}
-  _cokeIcon: {fileID: 95479220}
-  _paperIcon: {fileID: 1529790165}
-  _placeholderIcon: {fileID: 935232757}
+  _cokeIcon: {fileID: 95479222}
+  _paperIcon: {fileID: 1529790167}
+  _placeholderIcon: {fileID: 935232761}
   interactDistance: 3
   lerpSpeed: 10
   isHandOccupied: 0
@@ -2470,13 +2470,14 @@ GameObject:
   - component: {fileID: 935232758}
   - component: {fileID: 935232760}
   - component: {fileID: 935232759}
+  - component: {fileID: 935232761}
   m_Layer: 5
   m_Name: Pocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &935232758
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2534,6 +2535,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935232757}
   m_CullTransparentMesh: 1
+--- !u!225 &935232761
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935232757}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &976414689
 GameObject:
   m_ObjectHideFlags: 0
@@ -3322,7 +3335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1529790166
 RectTransform:
   m_ObjectHideFlags: 0
