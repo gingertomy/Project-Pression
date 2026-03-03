@@ -38,9 +38,10 @@ public class ThrowObject : MonoBehaviour
 
     private void Throw()
     {
-        if (objectToThrow == null) return;
-
         
+        if (objectToThrow == null || !objectToThrow.activeSelf) return;
+
+
         objectToThrow.transform.SetParent(null);
 
         
