@@ -7,6 +7,11 @@ public class PeopleHit : MonoBehaviour
     public int NbHit = 0;
     
     public event Action OnPlayerHit;
+
+    private void Start()
+    {
+        NbHit = 0;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         

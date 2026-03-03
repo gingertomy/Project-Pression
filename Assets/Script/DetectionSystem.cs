@@ -31,6 +31,11 @@ public class DetectionSystem : MonoBehaviour
         StartDetection();
     }
 
+    void Update()
+    {
+        //LevelUpDifficulty();
+    }
+    
     IEnumerator RandomDetection()
     {
         while (!IsInjured)
@@ -71,6 +76,11 @@ public class DetectionSystem : MonoBehaviour
         {
             MaxDelay -= 1;
             MaxVerificationTime += 1;
+            Debug.Log("LEVELUP");
+        }
+        else
+        {
+            return;
         }
     }
 

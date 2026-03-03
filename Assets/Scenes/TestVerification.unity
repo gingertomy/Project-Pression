@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PeopleHit
   detectionSystem: {fileID: 29185665}
+  NbHit: 0
 --- !u!136 &29185661
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -290,12 +291,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 465625792}
   thermometrePression: {fileID: 1448741533}
+  _peopleHit: {fileID: 29185660}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 2
 --- !u!1 &65289821
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,12 +476,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 0}
   thermometrePression: {fileID: 0}
+  _peopleHit: {fileID: 0}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 5
 --- !u!114 &97540286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,12 +876,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 0}
   thermometrePression: {fileID: 0}
+  _peopleHit: {fileID: 0}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 5
 --- !u!114 &158388260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,12 +1187,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 0}
   thermometrePression: {fileID: 0}
+  _peopleHit: {fileID: 0}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 5
 --- !u!114 &240940513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2144,12 +2153,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 0}
   thermometrePression: {fileID: 0}
+  _peopleHit: {fileID: 0}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 5
 --- !u!114 &834890932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2244,6 +2255,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834890929}
   m_CullTransparentMesh: 1
+--- !u!1001 &867607740
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.6784763
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.593
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.6903763
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
+      propertyPath: m_Name
+      value: SM_Test_Burger
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8e53f39199a4a7c4fbbf44cadb1cc03b, type: 3}
 --- !u!1 &888629638
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,6 +3121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PeopleHit
   detectionSystem: {fileID: 1396067047}
+  NbHit: 0
 --- !u!136 &1396067043
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3162,12 +3231,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 465625792}
   thermometrePression: {fileID: 1448741533}
+  _peopleHit: {fileID: 1396067042}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 2
 --- !u!1 &1448741531
 GameObject:
   m_ObjectHideFlags: 0
@@ -3279,6 +3350,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   previewPression: 0
+  _workReference: {fileID: 0}
+  _peopleHitReference: {fileID: 0}
 --- !u!114 &1448741534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3405,6 +3478,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529790165}
   m_CullTransparentMesh: 1
+--- !u!1001 &1640647419
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.0743024
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.55291414
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.435498
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
+      propertyPath: m_Name
+      value: Zehbi
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9bbc5e65bf8a53048b9dcd382546ccf4, type: 3}
 --- !u!1 &1839392892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3572,12 +3702,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DetectionSystem
   interactObject: {fileID: 465625792}
   thermometrePression: {fileID: 0}
+  _peopleHit: {fileID: 0}
   MinDelay: 5
   MaxDelay: 15
   MinVerificationTime: 1
   MaxVerificationTime: 3
   StunedTime: 3
   IsInjured: 0
+  NbHitForLevelUp: 5
 --- !u!65 &1887313744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4334,3 +4466,5 @@ SceneRoots:
   - {fileID: 465625793}
   - {fileID: 127849869}
   - {fileID: 305869319}
+  - {fileID: 867607740}
+  - {fileID: 1640647419}
