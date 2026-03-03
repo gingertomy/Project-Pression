@@ -123,7 +123,7 @@ public class Work : MonoBehaviour
     private void TriggerPression()
     {
         Debug.Log("GAME OVER");
-        enabled = false;
-        Time.timeScale = 0f;
+        
+        BossArrival?.Invoke();
     }
 }

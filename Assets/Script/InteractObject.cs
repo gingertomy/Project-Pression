@@ -20,8 +20,8 @@ public class InteractionObject : MonoBehaviour
     public CanvasGroup handsFull;
 
     [Header("UI Inventory Icons")]
-    [SerializeField] private CanvasGroup _cokeIcon;
-    [SerializeField] private CanvasGroup _paperIcon;
+    [SerializeField] private CanvasGroup _objectIcon;
+  
     [SerializeField] private CanvasGroup _placeholderIcon;
 
     [Header("Settings")]
@@ -48,7 +48,22 @@ public class InteractionObject : MonoBehaviour
 
     enum InteractionType { 
         None, 
-        Coke, Paper }
+        Burger,
+        Assiette,
+        Classeur,
+        Ciseau,
+        Crayon,
+        Agraffeuse,
+        Tasse,
+        Starbucks,
+        Cadre,
+        Peluche,
+        Paper,
+        Poubelle,
+        Pokeball,
+        Carton,
+        Chat
+    }
 
     private void Start()
     {
@@ -60,8 +75,8 @@ public class InteractionObject : MonoBehaviour
 
         
         if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
-        if (_cokeIcon != null) _cokeIcon.alpha = 0f;
-        if (_paperIcon != null) _paperIcon.alpha = 0f;
+        if (_objectIcon != null) _objectIcon.alpha = 0f;
+        
     }
 
     void Update()
@@ -85,8 +100,8 @@ public class InteractionObject : MonoBehaviour
                 if (_placeholderIcon != null) _placeholderIcon.alpha = 1f;
 
 
-                if (typeInInventory == InteractionType.Coke && _cokeIcon != null) _cokeIcon.alpha = 1f;
-                else if (typeInInventory == InteractionType.Paper && _paperIcon != null) _paperIcon.alpha = 1f;
+                _objectIcon.alpha = 1f;
+                
 
                 Debug.Log("Objet rangé dans l'inventaire");
             }
@@ -94,8 +109,8 @@ public class InteractionObject : MonoBehaviour
             {
                _audioDispatcher.PlayAudio(AudioType.Ranger);
                 if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
-                if (_cokeIcon != null) _cokeIcon.alpha = 0f;
-                if (_paperIcon != null) _paperIcon.alpha = 0f;
+                if (_objectIcon != null) _objectIcon.alpha = 0f;
+
 
                 objectInInventory.SetActive(true);
                 objectInInventory.transform.localPosition = Vector3.zero;
@@ -165,8 +180,22 @@ public class InteractionObject : MonoBehaviour
 
     InteractionType GetTypeFromTag(string tag)
     {
-        if (tag == "Coke") return InteractionType.Coke;
+        if (tag == "Coke") return InteractionType.Burger;
         if (tag == "Paper") return InteractionType.Paper;
+        if (tag == "Assiette") return InteractionType.Assiette;
+            if (tag == "Classeur") return InteractionType.Classeur;
+            if (tag == "Ciseau") return InteractionType.Ciseau;
+            if (tag == "Crayon") return InteractionType.Crayon;
+            if (tag == "Agraffeuse") return InteractionType.Agraffeuse;
+            if (tag == "Tasse") return InteractionType.Tasse;
+            if (tag == "Starbucks") return InteractionType.Starbucks;
+            if (tag == "Cadre") return InteractionType.Cadre;
+            if (tag == "Peluche") return InteractionType.Peluche;
+            if (tag == "Poubelle") return InteractionType.Poubelle;
+            if (tag == "Pokeball") return InteractionType.Pokeball;
+            if (tag == "Carton") return InteractionType.Carton;
+            if (tag == "Chat") return InteractionType.Chat;
+
         return InteractionType.None;
     }
 
@@ -205,8 +234,7 @@ public class InteractionObject : MonoBehaviour
             
             typeInInventory = currentType;
 
-            if (currentType == InteractionType.Coke) OnCokePicked?.Invoke(obj);
-            else if (currentType == InteractionType.Paper) OnPaperPicked?.Invoke(obj);
+            
 
             objectInInventory = obj;
             isHandOccupied = true;
@@ -247,8 +275,7 @@ public class InteractionObject : MonoBehaviour
 
         
         if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
-        if (_cokeIcon != null) _cokeIcon.alpha = 0f;
-        if (_paperIcon != null) _paperIcon.alpha = 0f;
+        if (_objectIcon != null) _objectIcon.alpha = 0f;
 
         if (crosshair != null) crosshair.alpha = 1f;
     }

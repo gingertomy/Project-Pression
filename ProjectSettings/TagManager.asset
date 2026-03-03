@@ -6,6 +6,20 @@ TagManager:
   tags:
   - Coke
   - Paper
+  - Burger
+  - Assiette
+  - Classeur
+  - Ciseau
+  - Crayon
+  - Agraffeuse
+  - Tasse
+  - Starbucks
+  - Cadre
+  - Peluche
+  - Poubelle
+  - Pokeball
+  - Carton
+  - Chat
   layers:
   - Default
   - TransparentFX
