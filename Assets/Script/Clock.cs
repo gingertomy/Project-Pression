@@ -1,68 +1,66 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HorlogeJournee : MonoBehaviour
+public class Horloge3DCrans : MonoBehaviour
 {
     [Header("Aiguille")]
-    public Transform aiguilleHeure;
-    public float angleMin = 0f;
-    public float angleMax = -360f;
+    public Transform aiguille;
 
-    [Header("Temps")]
-    [SerializeField] int heuresTotales = 24;
-    [SerializeField] float dureeParHeure = 30f;
+    [Header("Rotation / vitesse")]
+    public float vitesse = 30f; 
+    public float angleDepart = 0f;
 
-    [Header("Events")]
-    public UnityEvent onJourneeTerminee;
+    [Header("Crans")]
+    public float[] anglesCrans; 
 
-    float tempsEcoule = 0f;
-    bool tempsArrete = false;
+    [Header("Feedback")]
+    public UnityEvent<int> onCranAtteint;
+   
+    [Header("Victoire")]
+    public float angleVictoire; // angle à atteindre pour victoire
+    public UnityEvent onVictoire;
+    bool victoireAtteinte = false;
+    float angleActuel;
+    int indexCranAtteint = -1;
 
     void Start()
     {
-        MettreAJourAiguille();
+        angleActuel = angleDepart;
+        
+        if (anglesCrans.Length == 0)
+        {
+            int nombreCrans = 7; 
+            anglesCrans = new float[nombreCrans];
+            float angleParCran = 360f / nombreCrans;
+            for (int i = 0; i < nombreCrans; i++)
+                anglesCrans[i] = angleDepart + i * angleParCran;
+        }
     }
 
     void Update()
     {
-        if (tempsArrete) return;
+        angleActuel += vitesse * Time.deltaTime;
+        angleActuel %= 360f;
+        aiguille.localRotation = Quaternion.Euler(0, angleActuel, 0);
 
-        tempsEcoule += Time.deltaTime;
-
-        float progression = Mathf.Clamp01(
-            tempsEcoule / (heuresTotales * dureeParHeure)
-        );
-
-        float angle = Mathf.Lerp(angleMin, angleMax, progression);
-        aiguilleHeure.localRotation = Quaternion.Euler(0, 0, angle);
-
-        if (tempsEcoule >= heuresTotales * dureeParHeure)
+        
+        for (int i = 0; i < anglesCrans.Length; i++)
         {
-            tempsArrete = true;
-            onJourneeTerminee.Invoke();
+            // si on n'a pas encore déclenché ce cran
+            if (indexCranAtteint < i && angleActuel >= anglesCrans[i])
+            {
+                indexCranAtteint = i;
+                Debug.Log("Cran atteint : " + i + " | Angle : " + angleActuel.ToString("F1"));
+                onCranAtteint.Invoke(i);
+
+                // vérifier la victoire séparément
+                if (!victoireAtteinte && angleActuel >= angleVictoire)
+                {
+                    victoireAtteinte = true;
+                    Debug.Log("Victoire ! Angle : " + angleActuel.ToString("F1"));
+                    onVictoire.Invoke();
+                }
+            }
         }
-    }
-
-    // =========================
-    // GAME OVER
-    // =========================
-
-    public void ArreterTemps()
-    {
-        tempsArrete = true;
-    }
-
-    // =========================
-    // SCORE
-    // =========================
-
-    public int GetHeureTenue()
-    {
-        return Mathf.FloorToInt(tempsEcoule / dureeParHeure);
-    }
-
-    void MettreAJourAiguille()
-    {
-        aiguilleHeure.localRotation = Quaternion.Euler(0, 0, angleMin);
     }
 }
