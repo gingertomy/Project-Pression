@@ -90,5 +90,6 @@ public class DetectionSystem : MonoBehaviour
         yield return new WaitForSeconds(StunedTime);
         StartDetection();
         Debug.Log("STUN");
+        IsInjured = false;
     }
 }
