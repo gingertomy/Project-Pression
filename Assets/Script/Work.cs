@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections; // Nécessaire pour les Coroutines
 
 public class Work : MonoBehaviour
 {
@@ -11,12 +12,15 @@ public class Work : MonoBehaviour
     [SerializeField] private float _decaySpeed = 1f;
     [SerializeField] private float _initialWorkValue = 10f;
     [SerializeField] private float _autoWorkSpeed = 2f;
+    [SerializeField] private float _startDelay = 5f; // Délai de 3 secondes
     [SerializeField] private MoveCamera _moveCamera;
     [SerializeField] private GameObject _textWork;
     [SerializeField] private AudioSource _audioSource;
 
     private bool _isWorkingAutomatically = false;
-    private bool _isCameraHigh = false; // Nouvelle condition
+    private bool _isCameraHigh = false;
+    private bool _isWaitingToWork = false; // Pour savoir si on est dans le délai des 3s
+    private Coroutine _startWorkCoroutine;
 
     public Image workRadialImage;
 
@@ -27,7 +31,6 @@ public class Work : MonoBehaviour
     private void Start()
     {
         _workValue = _initialWorkValue;
-
         _textWork.SetActive(false);
 
         if (_interactionObject == null)
@@ -36,7 +39,6 @@ public class Work : MonoBehaviour
 
     private void OnEnable()
     {
-        // On s'abonne aux événements de la caméra
         if (_moveCamera != null)
         {
             _moveCamera.OnCameraHigh += SetCameraHigh;
@@ -46,7 +48,6 @@ public class Work : MonoBehaviour
 
     private void OnDisable()
     {
-        // On se désabonne pour éviter les erreurs
         if (_moveCamera != null)
         {
             _moveCamera.OnCameraHigh -= SetCameraHigh;
@@ -65,48 +66,68 @@ public class Work : MonoBehaviour
 
     private void HandleAutomaticWork()
     {
-        // CONDITION MISE À JOUR : 
-        // Mains libres ET caméra en position BASSE (Low)
         bool canWork = (_interactionObject != null) &&
                        (!_interactionObject.isHandOccupied || _interactionObject.isObjectHidden) &&
-                       !_isCameraHigh; // Si la caméra est High, canWork devient false
+                       !_isCameraHigh;
 
         if (canWork)
         {
-            if (!_isWorkingAutomatically)
+            if (!_isWorkingAutomatically && !_isWaitingToWork)
             {
-                _isWorkingAutomatically = true;
-                _audioSource.Play();
-                StartWorking?.Invoke();
-                _textWork.SetActive(true);
-                Debug.Log("Travail ON : Caméra basse, l'aiguille monte.");
+                // On commence à attendre 3 secondes avant de travailler
+                _startWorkCoroutine = StartCoroutine(StartWorkAfterDelay());
             }
 
-            // Remplit la barre vers 10 (ou descend vers 0 selon ta logique de Game Over)
-            _workValue = Mathf.MoveTowards(_workValue, _initialWorkValue, _autoWorkSpeed * Time.deltaTime);
+            if (_isWorkingAutomatically)
+            {
+                // L'aiguille ne remonte QUE si on a fini d'attendre
+                _workValue = Mathf.MoveTowards(_workValue, _initialWorkValue, _autoWorkSpeed * Time.deltaTime);
+            }
         }
         else
         {
+            // Si on ne peut plus travailler, on annule l'attente ou on arrête le travail
+            if (_isWaitingToWork)
+            {
+                StopCoroutine(_startWorkCoroutine);
+                _isWaitingToWork = false;
+            }
+
             if (_isWorkingAutomatically)
             {
                 _isWorkingAutomatically = false;
                 _audioSource.Pause();
                 StopWorking?.Invoke();
                 _textWork.SetActive(false);
-                Debug.Log("Travail OFF : Caméra haute ou mains prises.");
+                Debug.Log("Travail OFF");
             }
 
-            // On perd de la progression si on ne travaille pas
+            // La barre descend TOUJOURS si on ne travaille pas activement
             _workValue -= _decaySpeed * Time.deltaTime;
         }
 
         _workValue = Mathf.Max(_workValue, 0);
 
-        // Si la valeur tombe à 0 (Game Over)
         if (_workValue <= 0f)
         {
             TriggerPression();
         }
+    }
+
+    private IEnumerator StartWorkAfterDelay()
+    {
+        _isWaitingToWork = true;
+        Debug.Log("Préparation au travail... attente de " + _startDelay + "s");
+
+        yield return new WaitForSeconds(_startDelay);
+
+        _isWorkingAutomatically = true;
+        _isWaitingToWork = false;
+
+        _audioSource.Play();
+        StartWorking?.Invoke();
+        _textWork.SetActive(true);
+        Debug.Log("Travail ON : L'aiguille remonte enfin.");
     }
 
     private void HandleUI()
@@ -114,7 +135,6 @@ public class Work : MonoBehaviour
         if (workRadialImage != null)
         {
             float ratio = _workValue / _initialWorkValue;
-            // 1f - ratio si tu veux que le rouge soit à 0
             workRadialImage.fillAmount = 1f - ratio;
             workRadialImage.color = Color.Lerp(Color.green, Color.red, workRadialImage.fillAmount);
         }
@@ -123,8 +143,6 @@ public class Work : MonoBehaviour
     private void TriggerPression()
     {
         _workValue = 10f;
-        Debug.Log("GAME OVER");
-        
         BossArrival?.Invoke();
     }
 }
