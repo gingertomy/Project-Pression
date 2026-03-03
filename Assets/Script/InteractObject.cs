@@ -45,7 +45,9 @@ public class InteractionObject : MonoBehaviour
     public event Action<GameObject> OnHover;
     public event Action<GameObject> OnNoHover;
 
-    enum InteractionType { None, Coke, Paper }
+    enum InteractionType { 
+        None, 
+        Coke, Paper }
 
     private void Start()
     {

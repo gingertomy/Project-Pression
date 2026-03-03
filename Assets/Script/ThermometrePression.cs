@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ThermometrePression : MonoBehaviour
 {
@@ -21,12 +22,22 @@ public class ThermometrePression : MonoBehaviour
 
     [Header("Paliers")]
     [SerializeField] float[] seuilsPaliers;
-
     [Tooltip("Un UnityEvent par palier, dans le même ordre que Seuils Paliers")]
     [SerializeField] UnityEvent[] feedbackParPalier;
 
     [Header("Game Over")]
     public UnityEvent onGameOver;
+
+    [Header("Vignette")]
+    [SerializeField] private Image vignetteImage;
+    [SerializeField, Range(0f, 1f)] private float vignetteAlphaMax = 0.75f;
+    [SerializeField] private AnimationCurve vignetteCurve = AnimationCurve.Linear(0, 0, 1, 1);
+
+    [Header("Camera Shake")]
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private float shakeAmplitudeMax = 0.08f;
+    [SerializeField] private float shakeFrequency = 18f;
+    [SerializeField] private AnimationCurve shakeCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     [Header("DEBUG éditeur")]
     [SerializeField, Range(0f, 1f)] float previewPression = 0f;
@@ -34,60 +45,66 @@ public class ThermometrePression : MonoBehaviour
     [SerializeField] private Work _workReference;
     [SerializeField] private PeopleHit _peopleHitReference;
 
-
     int palierActuel = -1;
     bool gameOverDeclenche;
     private bool isWorking = false;
 
+    private Vector3 cameraInitialLocalPos;
+    private float shakeTime;
 
+    void Start()
+    {
+        if (cameraTransform != null)
+            cameraInitialLocalPos = cameraTransform.localPosition;
+    }
 
     private void OnEnable()
     {
-        _workReference.StartWorking += StartAiguille;
-        _workReference.StopWorking += StopAiguille;
-        _peopleHitReference.OnPlayerHit += DiminuerPression;
-        _workReference.BossArrival += AugmenterPression;
+        if (_workReference != null)
+        {
+            _workReference.StartWorking += StartAiguille;
+            _workReference.StopWorking += StopAiguille;
+            _workReference.BossArrival += AugmenterPression;
+        }
 
+        if (_peopleHitReference != null)
+            _peopleHitReference.OnPlayerHit += DiminuerPression;
     }
+
     private void OnDisable()
     {
-        _workReference.StartWorking -= StartAiguille;
-        _workReference.StopWorking -= StopAiguille;
-        _peopleHitReference.OnPlayerHit += DiminuerPression;
-        _workReference.BossArrival -= AugmenterPression;
+        if (_workReference != null)
+        {
+            _workReference.StartWorking -= StartAiguille;
+            _workReference.StopWorking -= StopAiguille;
+            _workReference.BossArrival -= AugmenterPression;
+        }
+
+        if (_peopleHitReference != null)
+            _peopleHitReference.OnPlayerHit -= DiminuerPression;
     }
 
     void Update()
     {
         if (gameOverDeclenche) return;
-        if (isWorking)
-        {
-            ModifierPression(augmentationPassiveParSeconde * Time.deltaTime);
-        }
-    }
 
+        if (isWorking)
+            ModifierPression(augmentationPassiveParSeconde * Time.deltaTime);
+
+        MettreAJourCameraShake();
+    }
 
     void OnValidate()
     {
-        if (aiguille == null) return;
-
-        float angle = Mathf.Lerp(angleMin, angleMax, previewPression);
-        aiguille.localRotation = Quaternion.Euler(0f, 0f, angle);
-
-        if (seuilsPaliers != null)
+        if (aiguille != null)
         {
-            for (int i = 0; i < seuilsPaliers.Length; i++)
-            {
-                float anglePalier = Mathf.Lerp(angleMin, angleMax, seuilsPaliers[i]);
-                Debug.Log($"[Preview] Palier {i} | Seuil : {seuilsPaliers[i]:F2} | Angle : {anglePalier:F1}°");
-            }
+            float angle = Mathf.Lerp(angleMin, angleMax, previewPression);
+            aiguille.localRotation = Quaternion.Euler(0f, 0f, angle);
         }
     }
 
-    
-
     // =========================
-    // APPELS FUTURS DU PLAYER
+    // APPELS EXTERNES
     // =========================
 
     public void AugmenterPression()
@@ -95,9 +112,11 @@ public class ThermometrePression : MonoBehaviour
         ModifierPression(cranAugmentation);
         Debug.Log("PRESSION AUGMENTE");
     }
-    public void DiminuerPression() => ModifierPression(-cranDiminution);
-    //public void AugmenterPression(float valeur) => ModifierPression(valeur);
-    //public void DiminuerPression(float valeur) => ModifierPression(-valeur);
+
+    public void DiminuerPression()
+    {
+        ModifierPression(-cranDiminution);
+    }
 
     // =========================
     // LOGIQUE INTERNE
@@ -108,59 +127,80 @@ public class ThermometrePression : MonoBehaviour
         pression = Mathf.Clamp01(pression + delta);
 
         MettreAJourAiguille();
+        MettreAJourVignette();
         VerifierPaliers();
 
         if (pression >= 1f && !gameOverDeclenche)
         {
             gameOverDeclenche = true;
-            onGameOver.Invoke();
+            onGameOver?.Invoke();
         }
     }
 
     void MettreAJourAiguille()
     {
+        if (aiguille == null) return;
+
         float angle = Mathf.Lerp(angleMin, angleMax, pression);
         aiguille.localRotation = Quaternion.Euler(0, 0, angle);
     }
 
+    void MettreAJourVignette()
+    {
+        if (vignetteImage == null) return;
+
+        float intensite = vignetteCurve.Evaluate(pression) * vignetteAlphaMax;
+
+        Color c = vignetteImage.color;
+        c.a = intensite;
+        vignetteImage.color = c;
+    }
+
+    void MettreAJourCameraShake()
+    {
+        if (cameraTransform == null) return;
+
+        float intensite = shakeCurve.Evaluate(pression) * shakeAmplitudeMax;
+
+        if (intensite <= 0.001f)
+        {
+            cameraTransform.localPosition = cameraInitialLocalPos;
+            return;
+        }
+
+        shakeTime += Time.deltaTime * shakeFrequency;
+
+        float offsetX = (Mathf.PerlinNoise(shakeTime, 0f) - 0.5f) * 2f;
+        float offsetY = (Mathf.PerlinNoise(0f, shakeTime) - 0.5f) * 2f;
+
+        Vector3 offset = new Vector3(offsetX, offsetY, 0f) * intensite;
+
+        cameraTransform.localPosition = cameraInitialLocalPos + offset;
+    }
+
     void VerifierPaliers()
     {
+        if (seuilsPaliers == null) return;
+
         for (int i = 0; i < seuilsPaliers.Length; i++)
         {
             if (pression >= seuilsPaliers[i] && i > palierActuel)
             {
                 palierActuel = i;
 
-                float angleActuel = Mathf.Lerp(angleMin, angleMax, pression);
-                Debug.Log($"Palier atteint : {palierActuel} | Pression : {pression:F2} | Angle : {angleActuel:F1}°");
-
                 if (feedbackParPalier != null && i < feedbackParPalier.Length)
-                    feedbackParPalier[i].Invoke();
+                    feedbackParPalier[i]?.Invoke();
             }
         }
-    }
-    void OnGUI()
-    {
-        float angleActuel = Mathf.Lerp(angleMin, angleMax, pression);
-
-        GUIStyle style = new GUIStyle(GUI.skin.box) { fontSize = 18 };
-        style.normal.textColor = Color.white;
-
-        string texte = $"Pression : {pression:F2}\n" +
-                       $"Angle : {angleActuel:F1}°\n" +
-                       $"Palier actuel : {palierActuel}";
-
-        GUI.Box(new Rect(10, 10, 250, 80), texte, style);
     }
 
     private void StartAiguille()
     {
         isWorking = true;
     }
+
     private void StopAiguille()
     {
         isWorking = false;
     }
-
-
 }

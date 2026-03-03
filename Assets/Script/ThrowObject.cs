@@ -6,6 +6,7 @@ public class ThrowObject : MonoBehaviour
     [SerializeField] private InteractionObject _interactObject; 
     [SerializeField] private float throwForce = 15f;
     [SerializeField] private float upwardForce = 2f;
+    [SerializeField] private AudioDispatcher _audioDispatcher;
 
     private GameObject objectToThrow;
 
@@ -48,6 +49,7 @@ public class ThrowObject : MonoBehaviour
         
         if (objectToThrow.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
+            _audioDispatcher.PlayAudio(AudioType.Throw);
             rb.isKinematic = false;
             rb.linearVelocity = Vector3.zero; 
 

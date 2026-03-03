@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
@@ -11,6 +12,9 @@ public class MoveCamera : MonoBehaviour
 
     private float xRotation = 0f;
     private float defaultYPos;
+
+    public event Action OnCameraHigh;
+    public event Action OnCameraLow;
 
     void Start()
     {
@@ -37,11 +41,13 @@ public class MoveCamera : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             targetY = defaultYPos + targetHeightOffset;
+            OnCameraHigh?.Invoke();
         }
         else
         {
 
             targetY = defaultYPos;
+            OnCameraLow?.Invoke();
         }
 
 
