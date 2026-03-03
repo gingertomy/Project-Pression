@@ -20,9 +20,9 @@ public class InteractionObject : MonoBehaviour
     public CanvasGroup handsFull;
 
     [Header("UI Inventory Icons")]
-    [SerializeField] private GameObject _cokeIcon;
-    [SerializeField] private GameObject _paperIcon;
-    [SerializeField] private GameObject _placeholderIcon;
+    [SerializeField] private CanvasGroup _cokeIcon;
+    [SerializeField] private CanvasGroup _paperIcon;
+    [SerializeField] private CanvasGroup _placeholderIcon;
 
     [Header("Settings")]
     public float interactDistance = 3f;
@@ -35,7 +35,7 @@ public class InteractionObject : MonoBehaviour
     private InteractionType currentType;
     private InteractionType typeInInventory; 
 
-    private bool isHandOccupied = false;
+    public bool isHandOccupied = false;
     public bool isObjectHidden = false;
     private GameObject objectInInventory;
 
@@ -56,9 +56,9 @@ public class InteractionObject : MonoBehaviour
         if (crosshair != null) crosshair.alpha = 1f;
 
         
-        if (_placeholderIcon != null) _placeholderIcon.SetActive(false);
-        if (_cokeIcon != null) _cokeIcon.SetActive(false);
-        if (_paperIcon != null) _paperIcon.SetActive(false);
+        if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
+        if (_cokeIcon != null) _cokeIcon.alpha = 0f;
+        if (_paperIcon != null) _paperIcon.alpha = 0f;
     }
 
     void Update()
@@ -79,20 +79,20 @@ public class InteractionObject : MonoBehaviour
             {
                 
                 objectInInventory.SetActive(false);
-                if (_placeholderIcon != null) _placeholderIcon.SetActive(true);
+                if (_placeholderIcon != null) _placeholderIcon.alpha = 1f;
 
-                
-                if (typeInInventory == InteractionType.Coke && _cokeIcon != null) _cokeIcon.SetActive(true);
-                else if (typeInInventory == InteractionType.Paper && _paperIcon != null) _paperIcon.SetActive(true);
+
+                if (typeInInventory == InteractionType.Coke && _cokeIcon != null) _cokeIcon.alpha = 1f;
+                else if (typeInInventory == InteractionType.Paper && _paperIcon != null) _paperIcon.alpha = 1f;
 
                 Debug.Log("Objet rangé dans l'inventaire");
             }
             else
             {
                
-                if (_placeholderIcon != null) _placeholderIcon.SetActive(false);
-                if (_cokeIcon != null) _cokeIcon.SetActive(false);
-                if (_paperIcon != null) _paperIcon.SetActive(false);
+                if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
+                if (_cokeIcon != null) _cokeIcon.alpha = 0f;
+                if (_paperIcon != null) _paperIcon.alpha = 0f;
 
                 objectInInventory.SetActive(true);
                 objectInInventory.transform.localPosition = Vector3.zero;
@@ -242,9 +242,9 @@ public class InteractionObject : MonoBehaviour
         typeInInventory = InteractionType.None;
 
         
-        if (_placeholderIcon != null) _placeholderIcon.SetActive(false);
-        if (_cokeIcon != null) _cokeIcon.SetActive(false);
-        if (_paperIcon != null) _paperIcon.SetActive(false);
+        if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
+        if (_cokeIcon != null) _cokeIcon.alpha = 0f;
+        if (_paperIcon != null) _paperIcon.alpha = 0f;
 
         if (crosshair != null) crosshair.alpha = 1f;
     }
