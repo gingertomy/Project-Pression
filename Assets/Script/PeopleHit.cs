@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using Random = UnityEngine.Random;
 
 public class PeopleHit : MonoBehaviour
 {
     [SerializeField] DetectionSystem detectionSystem;
     [SerializeField] AudioSource _audioSource;
+    [SerializeField] Animator[] _HitConsequence;
     public int NbHit = 0;
     
     public event Action OnPlayerHit;
@@ -13,6 +16,13 @@ public class PeopleHit : MonoBehaviour
     {
         NbHit = 0;
     }
+
+    private void RandomAnimation()
+    {
+        int index = Random.Range(0, _HitConsequence.Length);
+        _HitConsequence[index].SetTrigger("Hit");
+    }
+    
     private void OnCollisionEnter(Collision collision)
     {
         
@@ -23,6 +33,7 @@ public class PeopleHit : MonoBehaviour
             OnPlayerHit?.Invoke();
             detectionSystem.Injured();
             NbHit++;
+            RandomAnimation();
         }
 
     }
