@@ -569,7 +569,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 77fef0b30ea29db47974eff682c1d90e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4908,7 +4908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1561839304
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5968,7 +5968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Horloge3D
   aiguille: {fileID: 1369626367}
-  vitesse: 15
+  vitesse: 0.94
   angleDepart: -184
   anglesCrans:
   - -184
@@ -5983,7 +5983,19 @@ MonoBehaviour:
   - 85
   onCranAtteint:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1686830956}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   angleVictoire: 85
   onVictoire:
     m_PersistentCalls:
@@ -6000,7 +6012,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  VictoryPanel: {fileID: 0}
+  VictoryPanel: {fileID: 1561839303}
 --- !u!1 &1825777929
 GameObject:
   m_ObjectHideFlags: 0
