@@ -6091,7 +6091,7 @@ MonoBehaviour:
   angleMax: -218
   pression: 0
   augmentationPassiveParSeconde: 0.02
-  cranAugmentation: 0.1
+  cranAugmentation: 0.05
   cranDiminution: 0.15
   seuilsPaliers:
   - 0

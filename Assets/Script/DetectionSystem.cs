@@ -77,9 +77,9 @@ public class DetectionSystem : MonoBehaviour
             Debug.Log("regarde");
             if (!interactObject.isObjectHidden && interactObject.isHandOccupied)
             {  
-                thermometrePression.AugmenterPression();
                 if (attentionactivated)
                 {
+                    thermometrePression.AugmenterPression();
                     _AttentionAnimator.SetTrigger("Detected");
                 }
                 attentionactivated = false;
