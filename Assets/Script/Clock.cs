@@ -23,6 +23,7 @@ public class Horloge3DCrans : MonoBehaviour
     float angleActuel;
     int indexCranAtteint = -1;
 
+    [SerializeField] private GameObject VictoryPanel;
     void Start()
     {
         angleActuel = angleDepart;
@@ -57,8 +58,8 @@ public class Horloge3DCrans : MonoBehaviour
                 if (!victoireAtteinte && angleActuel >= angleVictoire)
                 {
                     victoireAtteinte = true;
-                    Debug.Log("Victoire ! Angle : " + angleActuel.ToString("F1"));
-                    onVictoire.Invoke();
+                    if (VictoryPanel != null)
+                        VictoryPanel.SetActive(true);
                 }
             }
         }

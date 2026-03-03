@@ -13,7 +13,7 @@ public class GameOver : MonoBehaviour
     [Header("Son (optionnel)")]
     [SerializeField] private AudioSource audioSource;
 
-    private static readonly int TriggerClick = Animator.StringToHash("Click");
+    private static readonly int TriggerClickGameO = Animator.StringToHash("ClickGameO");
 
     private bool transitionEnCours = false;
     
@@ -38,7 +38,7 @@ public class GameOver : MonoBehaviour
     IEnumerator TransitionVersScene(string sceneName)
     {
         if (animator != null)
-            animator.SetTrigger(TriggerClick);
+            animator.SetTrigger(TriggerClickGameO);
         
         if (audioSource != null && audioSource.clip != null)
             audioSource.Play();
