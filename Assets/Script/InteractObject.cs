@@ -41,8 +41,8 @@ public class InteractionObject : MonoBehaviour
     [SerializeField] private AudioDispatcher _audioDispatcher;
 
     
-    public event Action<GameObject> OnCokePicked;
-    public event Action<GameObject> OnPaperPicked;
+    public event Action<GameObject> OnObjectPicked;
+   
     public event Action<GameObject> OnHover;
     public event Action<GameObject> OnNoHover;
 
@@ -239,6 +239,8 @@ public class InteractionObject : MonoBehaviour
             objectInInventory = obj;
             isHandOccupied = true;
             isObjectHidden = false;
+
+            OnObjectPicked?.Invoke(obj);
 
             StopLooking();
         }

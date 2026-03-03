@@ -12,16 +12,16 @@ public class ThrowObject : MonoBehaviour
 
     private void OnEnable()
     {
-       
-        _interactObject.OnCokePicked += HandleObjectPicked;
-        _interactObject.OnPaperPicked += HandleObjectPicked;
+
+        _interactObject.OnObjectPicked += HandleObjectPicked;
     }
+        
 
     private void OnDisable()
     {
        
-        _interactObject.OnCokePicked -= HandleObjectPicked;
-        _interactObject.OnPaperPicked -= HandleObjectPicked;
+        _interactObject.OnObjectPicked -= HandleObjectPicked;
+        
     }
 
     private void HandleObjectPicked(GameObject pickedObject)
