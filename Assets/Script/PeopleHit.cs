@@ -56,7 +56,7 @@ public class PeopleHit : MonoBehaviour
 
         // Logique de jeu TOUJOURS exécutée
         OnPlayerHit?.Invoke();
-        detectionSystem?.Injured();
+        
         NbHit++;
         RandomAnimation();
     }

@@ -24,6 +24,7 @@ public class DetectionSystem : MonoBehaviour
     public bool IsInjured = false;
     
     public int NbHitForLevelUp = 5;
+    private bool attentionactivated = false;
     
     
     // récupérer variable du joueur : si il travaille ou si il fait des betises
@@ -35,6 +36,14 @@ public class DetectionSystem : MonoBehaviour
         StartDetection();
     }
 
+    private void OnEnable()
+    {
+        _peopleHit.OnPlayerHit += Injured;
+    }
+    private void OnDisable()
+    {
+        _peopleHit.OnPlayerHit -= Injured;
+    }
     void Update()
     {
         //LevelUpDifficulty();
@@ -61,6 +70,7 @@ public class DetectionSystem : MonoBehaviour
         Debug.Log(verificationTime);
         GetComponent<MeshRenderer>().material.color = Color.red;
         _InterrogationAnimator.SetTrigger("InDetection");
+        attentionactivated = true;
         while (timer < verificationTime)
         {
             timer += Time.deltaTime;
@@ -68,7 +78,12 @@ public class DetectionSystem : MonoBehaviour
             if (!interactObject.isObjectHidden && interactObject.isHandOccupied)
             {  
                 thermometrePression.AugmenterPression();
-                _AttentionAnimator.SetTrigger("Detected");// je sais pas si ca va marcher
+                if (attentionactivated)
+                {
+                    _AttentionAnimator.SetTrigger("Detected");
+                }
+                attentionactivated = false;
+                // je sais pas si ca va marcher
             }
             yield return null;
         }

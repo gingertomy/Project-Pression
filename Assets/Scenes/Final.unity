@@ -1398,7 +1398,7 @@ MonoBehaviour:
   _hitEffects:
   - objectTag: Burger
     effectPrefab: {fileID: 3309567331556451935, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
-  - objectTag: Coffee
+  - objectTag: Tasse
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
   - objectTag: Starbucks
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
@@ -2076,7 +2076,7 @@ MonoBehaviour:
   _hitEffects:
   - objectTag: Burger
     effectPrefab: {fileID: 3309567331556451935, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
-  - objectTag: Coffee
+  - objectTag: Tasse
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
   - objectTag: Starbucks
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
@@ -3529,7 +3529,7 @@ MonoBehaviour:
   _hitEffects:
   - objectTag: Burger
     effectPrefab: {fileID: 3309567331556451935, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
-  - objectTag: Coffee
+  - objectTag: Tasse
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
   - objectTag: Starbucks
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
@@ -7741,7 +7741,7 @@ MonoBehaviour:
   _hitEffects:
   - objectTag: Burger
     effectPrefab: {fileID: 3309567331556451935, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
-  - objectTag: Coffee
+  - objectTag: Tasse
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
   - objectTag: Starbucks
     effectPrefab: {fileID: 4452438916400820008, guid: d9a6a90f85459284197007ac999bb8a9, type: 3}
