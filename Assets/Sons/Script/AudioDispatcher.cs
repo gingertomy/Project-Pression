@@ -9,7 +9,8 @@ public enum AudioType
     Ranger,
     Busted,
     Boss,
-    Surpris
+    Surpris,
+    GameOver
 
 
 }

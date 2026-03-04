@@ -44,7 +44,8 @@ public class ThermometrePression : MonoBehaviour
     [SerializeField] private PeopleHit[] _peopleHitReference; // Tableau d'ennemis
 
     [SerializeField] private GameObject GameOverPanel;
-    
+    [SerializeField] private AudioDispatcher _audioDispatcher;
+
     private int palierActuel = -1;
     private bool gameOverDeclenche;
     private bool isWorking = false;
@@ -162,6 +163,8 @@ public class ThermometrePression : MonoBehaviour
             // Libère le curseur pour que le joueur puisse cliquer les boutons
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            _audioDispatcher.PlayAudio(AudioType.GameOver);
 
             if (GameOverPanel != null)
             {
