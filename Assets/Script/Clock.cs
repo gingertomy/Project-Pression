@@ -58,9 +58,14 @@ public class Horloge3DCrans : MonoBehaviour
                 {
                     victoireAtteinte = true;
 
-                    // Libère le curseur pour que le joueur puisse cliquer les boutons
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
+
+                    // Désactive tout le Player
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    if (player != null) player.SetActive(false);
+
+                    Time.timeScale = 0f;
 
                     if (VictoryPanel != null)
                         VictoryPanel.SetActive(true);

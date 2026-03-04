@@ -161,23 +161,24 @@ public class ThermometrePression : MonoBehaviour
         {
             gameOverDeclenche = true;
 
-            // Libère le curseur pour que le joueur puisse cliquer les boutons
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            // Désactive tout le Player
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null) player.SetActive(false);
 
             _audioDispatcher.PlayAudio(AudioType.GameOver);
             _audioSource.Stop();
 
             if (GameOverPanel != null)
-            {
                 GameOverPanel.SetActive(true);
 
-                Time.timeScale = 0f;
-
-            }
-
+            Time.timeScale = 0f;
             onGameOver.Invoke();
         }
+
+
 
 
     }

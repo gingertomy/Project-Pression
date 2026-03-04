@@ -39,17 +39,19 @@ public class MenuVictory : MonoBehaviour
     {
         if (animator != null)
             animator.SetTrigger(TriggerClickGameO);
-        
+
         if (audioSource != null && audioSource.clip != null)
             audioSource.Play();
-        
-        float attente = dureeAnimation;
 
+        float attente = dureeAnimation;
         if (audioSource != null && audioSource.clip != null)
             attente = Mathf.Max(attente, audioSource.clip.length);
 
-        yield return new WaitForSeconds(attente);
+        // Pas affecté par Time.timeScale = 0
+        yield return new WaitForSecondsRealtime(attente);
 
+        Time.timeScale = 1f; // Remet le temps à la normale avant de charger
         SceneManager.LoadScene(sceneName);
     }
+
 }
