@@ -53,10 +53,8 @@ public class InteractionObject : MonoBehaviour
     public enum InteractionType { 
         None, 
         Burger,
-        Assiette,
         Classeur,
         Ciseau,
-        Crayon,
         Agraffeuse,
         Tasse,
         Starbucks,
@@ -64,9 +62,10 @@ public class InteractionObject : MonoBehaviour
         Peluche,
         Paper,
         Poubelle,
-        Pokeball,
         Carton,
-        Chat
+        Tapis,
+        Souris,
+        Globe
     }
 
     private void Start()
@@ -193,21 +192,19 @@ public class InteractionObject : MonoBehaviour
     InteractionType GetTypeFromTag(string tag)
     {
         if (tag == "Paper") return InteractionType.Paper;
-        if (tag == "Assiette") return InteractionType.Assiette;
-            if (tag == "Classeur") return InteractionType.Classeur;
-            if (tag == "Ciseau") return InteractionType.Ciseau;
-            if (tag == "Crayon") return InteractionType.Crayon;
-            if (tag == "Agraffeuse") return InteractionType.Agraffeuse;
-            if (tag == "Tasse") return InteractionType.Tasse;
-            if (tag == "Starbucks") return InteractionType.Starbucks;
-            if (tag == "Cadre") return InteractionType.Cadre;
-            if (tag == "Peluche") return InteractionType.Peluche;
-            if (tag == "Poubelle") return InteractionType.Poubelle;
-            if (tag == "Pokeball") return InteractionType.Pokeball;
-            if (tag == "Carton") return InteractionType.Carton;
-            if (tag == "Chat") return InteractionType.Chat;
-            if (tag == "Burger") return InteractionType.Burger;
-
+        if (tag == "Classeur") return InteractionType.Classeur;
+        if (tag == "Ciseau") return InteractionType.Ciseau;
+        if (tag == "Agraffeuse") return InteractionType.Agraffeuse;
+        if (tag == "Tasse") return InteractionType.Tasse;
+        if (tag == "Starbucks") return InteractionType.Starbucks;
+        if (tag == "Cadre") return InteractionType.Cadre;
+        if (tag == "Peluche") return InteractionType.Peluche;
+        if (tag == "Poubelle") return InteractionType.Poubelle;
+        if (tag == "Carton") return InteractionType.Carton;
+        if (tag == "Burger") return InteractionType.Burger;
+        if (tag == "Tapis") return InteractionType.Tapis;
+        if (tag == "Souris") return InteractionType.Souris;
+        if (tag == "Globe") return InteractionType.Globe;
         return InteractionType.None;
     }
 

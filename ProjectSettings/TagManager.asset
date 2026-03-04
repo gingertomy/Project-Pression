@@ -20,7 +20,10 @@ TagManager:
   - Pokeball
   - Carton
   - Chat
-  - Coffee
+  - Clavier
+  - Tapis
+  - Souris
+  - Globe
   layers:
   - Default
   - TransparentFX
