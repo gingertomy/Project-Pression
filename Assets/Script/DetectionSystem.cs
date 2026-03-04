@@ -26,6 +26,8 @@ public class DetectionSystem : MonoBehaviour
     public int NbHitForLevelUp = 5;
     private bool attentionactivated = false;
     
+    [SerializeField] private AudioSource audioSurpris;
+    [SerializeField] private AudioSource audioAttention;
     
     // récupérer variable du joueur : si il travaille ou si il fait des betises
     // récupérer variable du joueur : variable qui illustre le nombre de fois qu'il a embêté des gens. Si beaucoup, alors fréquence augmente
@@ -60,6 +62,8 @@ public class DetectionSystem : MonoBehaviour
             yield return StartCoroutine(TriggerDetection());
             LevelUpDifficulty();
             // l'employer se retourne
+            if (audioSurpris != null)
+                audioSurpris.Play();
         }
     }
 
@@ -79,6 +83,8 @@ public class DetectionSystem : MonoBehaviour
             {  
                 if (attentionactivated)
                 {
+                    if (audioAttention != null)
+                        audioAttention.Play();
                     thermometrePression.AugmenterPression();
                     _AttentionAnimator.SetTrigger("Detected");
                 }
