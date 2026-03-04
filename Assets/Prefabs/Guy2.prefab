@@ -144,7 +144,7 @@ MonoBehaviour:
   StunedTime: 3
   IsInjured: 0
   NbHitForLevelUp: 5
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 6083519627117694001}
   idleSprite: {fileID: 21300000, guid: 2530d8604aa64ff4eaaa26c5f42dc915, type: 3}
   detectingSprite: {fileID: 21300000, guid: 4b42bb6adcd61ee40b739a84d0abd358, type: 3}
   alertSprite: {fileID: 21300000, guid: 6932ebd7480d8fe4d8418ec5549c45eb, type: 3}
