@@ -183,6 +183,9 @@ MonoBehaviour:
   detectionSystem: {fileID: 29185665}
   _audioSource: {fileID: 0}
   _HitConsequence: []
+  _hitEffects: []
+  _defaultEffect: {fileID: 0}
+  destroyDelay: 2
   NbHit: 0
 --- !u!136 &29185661
 CapsuleCollider:
@@ -1919,8 +1922,7 @@ MonoBehaviour:
   radialProgress: {fileID: 933884243}
   crosshair: {fileID: 1962105368}
   handsFull: {fileID: 1972185146}
-  _cokeIcon: {fileID: 95479222}
-  _paperIcon: {fileID: 1529790167}
+  _objectIcon: {fileID: 0}
   _placeholderIcon: {fileID: 935232761}
   interactDistance: 3
   lerpSpeed: 10
@@ -2913,6 +2915,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976414689}
   m_CullTransparentMesh: 1
+--- !u!1001 &1151344479
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0169305
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.661
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.512586
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9640081
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.26587293
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: aeb8ebbc74056014f9b296761d9caf26, type: 2}
+    - target: {fileID: 919132149155446097, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
+      propertyPath: m_Name
+      value: SM_Ciseaux
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c2a666ccd30caa478015692fb548ede, type: 3}
 --- !u!1 &1154082416
 GameObject:
   m_ObjectHideFlags: 0
@@ -3345,6 +3408,9 @@ MonoBehaviour:
   detectionSystem: {fileID: 1396067047}
   _audioSource: {fileID: 0}
   _HitConsequence: []
+  _hitEffects: []
+  _defaultEffect: {fileID: 0}
+  destroyDelay: 2
   NbHit: 0
 --- !u!136 &1396067043
 CapsuleCollider:
@@ -3602,36 +3668,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  cameraTransform: {fileID: 0}
-  shakeAmplitudeMax: 0.08
-  shakeFrequency: 18
-  shakeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   previewPression: 0
   _workReference: {fileID: 0}
   _peopleHitReference: []
+  GameOverPanel: {fileID: 0}
 --- !u!114 &1448741534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4932,3 +4972,4 @@ SceneRoots:
   - {fileID: 1392674267}
   - {fileID: 2054421618}
   - {fileID: 822297013}
+  - {fileID: 1151344479}
