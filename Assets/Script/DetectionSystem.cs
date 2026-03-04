@@ -26,6 +26,7 @@ public class DetectionSystem : MonoBehaviour
     [Header("Sprites États")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite idleSprite;
+    [SerializeField] private Sprite SideEye;
     [SerializeField] private Sprite detectingSprite;
     [SerializeField] private Sprite alertSprite;
     [SerializeField] private Sprite stunnedSprite;
@@ -69,6 +70,7 @@ public class DetectionSystem : MonoBehaviour
             LevelUpDifficulty();
             _AudioDispatcher.PlayAudio(AudioType.Surpris);
         }
+        //SetSprite(SideEye);
     }
 
     IEnumerator TriggerDetection()

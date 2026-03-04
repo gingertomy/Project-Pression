@@ -146,8 +146,9 @@ MonoBehaviour:
   NbHitForLevelUp: 5
   spriteRenderer: {fileID: 2890583420357204626}
   idleSprite: {fileID: 21300000, guid: a271917eef4ee124a9eb97fbde4abe4b, type: 3}
-  detectingSprite: {fileID: 21300000, guid: 91c923ffcd9e06c4ebd0cad3ed7df0a5, type: 3}
-  alertSprite: {fileID: 21300000, guid: 6bc933ae406968d4a9a697213da4a05a, type: 3}
+  SideEye: {fileID: 21300000, guid: 91c923ffcd9e06c4ebd0cad3ed7df0a5, type: 3}
+  detectingSprite: {fileID: 21300000, guid: f6ec541253a353a4b8564f6b5ef50171, type: 3}
+  alertSprite: {fileID: 21300000, guid: ef1926103283ae3468b122ee91e4d76d, type: 3}
   stunnedSprite: {fileID: 21300000, guid: 8e5dcd321d02d09409713709428d61d1, type: 3}
 --- !u!82 &5901580812778304685
 AudioSource:

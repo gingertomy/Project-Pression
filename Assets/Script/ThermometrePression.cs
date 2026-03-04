@@ -60,6 +60,7 @@ public class ThermometrePression : MonoBehaviour
         // Initialisation de la vignette à 0
         MettreAJourVignette();
         Time.timeScale = 1f; // S'assure que le temps est à l'échelle normale au début
+        AudioListener.pause = false;
     }
 
     private void OnEnable()
