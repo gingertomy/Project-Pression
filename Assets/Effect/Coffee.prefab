@@ -14,7 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1806656556273115123, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806656556273115123, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1806656556273115123, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3309567331556451935, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
       propertyPath: m_Name
@@ -22,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302272182210441283, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4302272182210441283, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.493
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4302272182210441283, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.74189
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4302272182210441283, guid: 78e46b23c10986a43a3cec2d67297160, type: 3}
       propertyPath: m_LocalRotation.w

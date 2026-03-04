@@ -46,7 +46,11 @@ public class InteractionObject : MonoBehaviour
     public event Action<GameObject> OnHover;
     public event Action<GameObject> OnNoHover;
 
-    enum InteractionType { 
+    public event Action Interact;
+    public event Action Pressed;
+    private bool hasHovered = false;
+    private bool hasPressed = false;
+    public enum InteractionType { 
         None, 
         Burger,
         Assiette,
@@ -141,7 +145,15 @@ public class InteractionObject : MonoBehaviour
                     currentType = hitType;
                     isLookingAtObject = true;
 
-                    if (!isHandOccupied) OnHover?.Invoke(currentInteractable);
+                    if (!isHandOccupied)
+                    {
+                        OnHover?.Invoke(currentInteractable);
+                        if (!hasHovered)
+                        {
+                            Interact?.Invoke();
+                            hasHovered = true;
+                        }
+                    }
                 }
 
                 
@@ -209,7 +221,17 @@ public class InteractionObject : MonoBehaviour
             holdTimer += Time.deltaTime;
             if (radialProgress != null) radialProgress.fillAmount = holdTimer / holdDuration;
 
-            if (holdTimer >= holdDuration) Pickup();
+            if (holdTimer >= holdDuration)
+            {
+                Pickup();
+
+                if (!hasPressed)
+                {
+                    Pressed?.Invoke();
+                    hasPressed = true;
+
+                }
+            }
         }
         else if (isHoldingKey)
         {

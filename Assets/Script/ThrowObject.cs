@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ThrowObject : MonoBehaviour
 {
-    [SerializeField] private InteractionObject _interactObject; 
+    [SerializeField] private InteractionObject _interactObject;
     [SerializeField] private float throwForce = 15f;
     [SerializeField] private float upwardForce = 2f;
     [SerializeField] private AudioDispatcher _audioDispatcher;
@@ -12,27 +12,27 @@ public class ThrowObject : MonoBehaviour
 
     private void OnEnable()
     {
-
-        _interactObject.OnObjectPicked += HandleObjectPicked;
+        // On s'abonne à l'événement générique de ramassage
+        if (_interactObject != null)
+            _interactObject.OnObjectPicked += HandleObjectPicked;
     }
-        
 
     private void OnDisable()
     {
-       
-        _interactObject.OnObjectPicked -= HandleObjectPicked;
-        
+        if (_interactObject != null)
+            _interactObject.OnObjectPicked -= HandleObjectPicked;
     }
 
     private void HandleObjectPicked(GameObject pickedObject)
     {
+        // L'objet ramassé devient le projectile prêt à être lancé
         objectToThrow = pickedObject;
     }
 
     private void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Mouse0) && objectToThrow != null)
+        // On ne peut lancer que si l'objet n'est pas "rangé" (donc actif)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && objectToThrow != null && objectToThrow.activeSelf)
         {
             Throw();
         }
@@ -40,42 +40,49 @@ public class ThrowObject : MonoBehaviour
 
     private void Throw()
     {
-        
-        if (objectToThrow == null || !objectToThrow.activeSelf) return;
+        if (objectToThrow == null) return;
 
+        // --- ÉTAPE CRUCIALE ---
+        // On crée une copie locale de la référence avant de mettre la variable globale à null
+        GameObject thrownInstance = objectToThrow;
 
-        objectToThrow.transform.SetParent(null);
+        // On détache l'objet de la main
+        thrownInstance.transform.SetParent(null);
 
-        
-        if (objectToThrow.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        // Application de la physique
+        if (thrownInstance.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             _audioDispatcher.PlayAudio(AudioType.Throw);
             rb.isKinematic = false;
-            rb.linearVelocity = Vector3.zero; 
 
-            
+            // On reset les forces actuelles pour un lancer propre
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            // Calcul de la direction (face à la caméra)
             Vector3 forceDirection = _interactObject.playerCamera.transform.forward;
             rb.AddForce(forceDirection * throwForce + Vector3.up * upwardForce, ForceMode.Impulse);
+
+            // Ajoute une petite rotation aléatoire pour le réalisme
+            rb.AddTorque(Random.insideUnitSphere * 5f, ForceMode.Impulse);
         }
 
-       
-        if (objectToThrow.TryGetComponent<Collider>(out Collider col))
+        // On réactive le collider pour qu'il touche les PeopleHit
+        if (thrownInstance.TryGetComponent<Collider>(out Collider col))
         {
             col.enabled = true;
         }
 
-        StartCoroutine(DestroyObject());
+        // On lance la destruction automatique sur l'instance qu'on vient de lancer
 
+
+        // On libère la logique de la main
         _interactObject.SetHandFree();
 
-        
+        // On vide la variable pour le prochain ramassage
         objectToThrow = null;
     }
 
-
-    IEnumerator DestroyObject()
-    {
-        yield return new WaitForSeconds(5f);
-        if (objectToThrow != null) Destroy(objectToThrow);
-    }
+    // On passe l'objet en paramètre pour être sûr de détruire le bon !
+    
 }

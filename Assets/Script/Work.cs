@@ -16,6 +16,8 @@ public class Work : MonoBehaviour
     [SerializeField] private MoveCamera _moveCamera;
     [SerializeField] private GameObject _textWork;
     [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioDispatcher _audioDispatcher;
+    [SerializeField] private Animator _animator;
 
     private bool _isWorkingAutomatically = false;
     private bool _isCameraHigh = false;
@@ -27,6 +29,8 @@ public class Work : MonoBehaviour
     public event Action StartWorking;
     public event Action StopWorking;
     public event Action BossArrival;
+    
+    
 
     private void Start()
     {
@@ -98,6 +102,7 @@ public class Work : MonoBehaviour
                 _isWorkingAutomatically = false;
                 _audioSource.Pause();
                 StopWorking?.Invoke();
+               
                 _textWork.SetActive(false);
                 Debug.Log("Travail OFF");
             }
@@ -143,6 +148,9 @@ public class Work : MonoBehaviour
     private void TriggerPression()
     {
         _workValue = 10f;
+        _audioDispatcher.PlayAudio(AudioType.Boss);
+        _animator.SetTrigger("Detected");
+        
         BossArrival?.Invoke();
     }
 }

@@ -6,8 +6,10 @@ public enum AudioType
     None,
     Throw,
     Grab,
-    Ranger
-
+    Ranger,
+    Busted,
+    Boss,
+    Surpris
 
 
 }

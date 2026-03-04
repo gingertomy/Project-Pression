@@ -19,6 +19,7 @@ public class ThermometrePression : MonoBehaviour
     [Header("Actions externes")]
     [SerializeField] float cranAugmentation = 0.1f;
     [SerializeField] float cranDiminution = 0.15f;
+    [SerializeField] float BOSSAugmentation = 0.3f;
 
     [Header("Paliers")]
     [SerializeField] float[] seuilsPaliers;
@@ -56,6 +57,7 @@ public class ThermometrePression : MonoBehaviour
 
         // Initialisation de la vignette à 0
         MettreAJourVignette();
+        Time.timeScale = 1f; // S'assure que le temps est à l'échelle normale au début
     }
 
     private void OnEnable()
@@ -65,7 +67,7 @@ public class ThermometrePression : MonoBehaviour
         {
             _workReference.StartWorking += StartAiguille;
             _workReference.StopWorking += StopAiguille;
-            _workReference.BossArrival += AugmenterPression;
+            _workReference.BossArrival += AugmenterPressionBOSS;
         }
 
         // Abonnement à TOUS les PeopleHit du tableau
@@ -85,7 +87,7 @@ public class ThermometrePression : MonoBehaviour
         {
             _workReference.StartWorking -= StartAiguille;
             _workReference.StopWorking -= StopAiguille;
-            _workReference.BossArrival -= AugmenterPression;
+            _workReference.BossArrival -= AugmenterPressionBOSS;
         }
 
         if (_peopleHitReference != null)
@@ -129,6 +131,12 @@ public class ThermometrePression : MonoBehaviour
         Debug.Log("PRESSION AUGMENTE");
     }
 
+    public void AugmenterPressionBOSS()
+    {
+        ModifierPression(BOSSAugmentation);
+        Debug.Log("PRESSION AUGMENTE");
+    }
+
     public void DiminuerPression()
     {
         ModifierPression(-cranDiminution);
@@ -156,7 +164,13 @@ public class ThermometrePression : MonoBehaviour
             Cursor.visible = true;
 
             if (GameOverPanel != null)
+            {
                 GameOverPanel.SetActive(true);
+
+                Time.timeScale = 0f;
+
+            }
+
             onGameOver.Invoke();
         }
 
