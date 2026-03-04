@@ -45,6 +45,7 @@ public class ThermometrePression : MonoBehaviour
 
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private AudioDispatcher _audioDispatcher;
+    [SerializeField] private AudioSource _audioSource;
 
     private int palierActuel = -1;
     private bool gameOverDeclenche;
@@ -165,6 +166,7 @@ public class ThermometrePression : MonoBehaviour
             Cursor.visible = true;
 
             _audioDispatcher.PlayAudio(AudioType.GameOver);
+            _audioSource.Stop();
 
             if (GameOverPanel != null)
             {
