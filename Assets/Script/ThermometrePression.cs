@@ -160,6 +160,7 @@ public class ThermometrePression : MonoBehaviour
         if (pression >= 1f && !gameOverDeclenche)
         {
             gameOverDeclenche = true;
+            AudioListener.pause = true;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

@@ -56,6 +56,7 @@ public class Horloge3DCrans : MonoBehaviour
 
                 if (!victoireAtteinte && angleActuel >= angleVictoire)
                 {
+                    AudioListener.pause = true;
                     victoireAtteinte = true;
 
                     Cursor.lockState = CursorLockMode.None;
