@@ -38,7 +38,8 @@ public class InteractionObject : MonoBehaviour
     public bool isHandOccupied = false;
     public bool isObjectHidden = false;
     private GameObject objectInInventory;
-    [SerializeField] private AudioDispatcher _audioDispatcher;
+    [SerializeField] private AudioSource _audioSourceGrab;
+    [SerializeField] private AudioSource _audioSourceRanger;
 
     
     public event Action<GameObject> OnObjectPicked;
@@ -98,7 +99,7 @@ public class InteractionObject : MonoBehaviour
 
             if (isObjectHidden)
             {
-                _audioDispatcher.PlayAudio(AudioType.Ranger);
+                _audioSourceRanger.Play();
                 objectInInventory.SetActive(false);
                 if (_placeholderIcon != null) _placeholderIcon.alpha = 1f;
 
@@ -110,7 +111,7 @@ public class InteractionObject : MonoBehaviour
             }
             else
             {
-               _audioDispatcher.PlayAudio(AudioType.Ranger);
+                _audioSourceRanger.Play();
                 if (_placeholderIcon != null) _placeholderIcon.alpha = 0f;
                 if (_objectIcon != null) _objectIcon.alpha = 0f;
 
@@ -240,7 +241,7 @@ public class InteractionObject : MonoBehaviour
     {
         if (!isHandOccupied)
         {
-            _audioDispatcher.PlayAudio(AudioType.Grab);
+            _audioSourceGrab.Play();
             GameObject obj = currentInteractable;
             OnNoHover?.Invoke(obj);
 

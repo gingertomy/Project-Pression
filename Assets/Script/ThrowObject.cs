@@ -6,7 +6,7 @@ public class ThrowObject : MonoBehaviour
     [SerializeField] private InteractionObject _interactObject;
     [SerializeField] private float throwForce = 15f;
     [SerializeField] private float upwardForce = 2f;
-    [SerializeField] private AudioDispatcher _audioDispatcher;
+    [SerializeField] private AudioSource _audioSource;
 
     private GameObject objectToThrow;
 
@@ -52,7 +52,7 @@ public class ThrowObject : MonoBehaviour
         // Application de la physique
         if (thrownInstance.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
-            _audioDispatcher.PlayAudio(AudioType.Throw);
+            _audioSource.Play();
             rb.isKinematic = false;
 
             // On reset les forces actuelles pour un lancer propre

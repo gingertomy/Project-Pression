@@ -11,7 +11,8 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] Animator _BustedAnimator;
     [SerializeField] Animator _InterrogationAnimator;
     [SerializeField] Animator _AttentionAnimator;
-    [SerializeField] AudioDispatcher _AudioDispatcher;
+    [SerializeField] private AudioSource _audioSourceSurpris;
+    [SerializeField] private AudioSource _audioSourceBusted;
 
     public float MinDelay = 5f;
     public float MaxDelay = 15f;
@@ -68,7 +69,7 @@ public class DetectionSystem : MonoBehaviour
             yield return new WaitForSeconds(DetectionDelay);
             yield return StartCoroutine(TriggerDetection());
             LevelUpDifficulty();
-            _AudioDispatcher.PlayAudio(AudioType.Surpris);
+            _audioSourceSurpris.Play();
         }
         //SetSprite(SideEye);
     }
@@ -93,7 +94,7 @@ public class DetectionSystem : MonoBehaviour
                     thermometrePression.AugmenterPression();
                     _AttentionAnimator.SetTrigger("Detected");
                     _BustedAnimator.SetTrigger("Detected");
-                    _AudioDispatcher.PlayAudio(AudioType.Busted);
+                    _audioSourceBusted.Play();
                     SetSprite(alertSprite); // AJOUT
                 }
                 attentionactivated = false;

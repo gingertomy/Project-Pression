@@ -15,9 +15,11 @@ public class Work : MonoBehaviour
     [SerializeField] private float _startDelay = 5f; // Délai de 3 secondes
     [SerializeField] private MoveCamera _moveCamera;
     [SerializeField] private GameObject _textWork;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioDispatcher _audioDispatcher;
+    [SerializeField] private AudioSource _audioSourceKeyboard;
+    [SerializeField] private AudioSource _audioSourceBoss;
     [SerializeField] private Animator _animator;
+
+    
 
     private bool _isWorkingAutomatically = false;
     private bool _isCameraHigh = false;
@@ -100,7 +102,7 @@ public class Work : MonoBehaviour
             if (_isWorkingAutomatically)
             {
                 _isWorkingAutomatically = false;
-                _audioSource.Pause();
+                _audioSourceKeyboard.Pause();
                 StopWorking?.Invoke();
                
                 _textWork.SetActive(false);
@@ -129,7 +131,7 @@ public class Work : MonoBehaviour
         _isWorkingAutomatically = true;
         _isWaitingToWork = false;
 
-        _audioSource.Play();
+        _audioSourceKeyboard.Play();
         StartWorking?.Invoke();
         _textWork.SetActive(true);
         Debug.Log("Travail ON : L'aiguille remonte enfin.");
@@ -148,7 +150,7 @@ public class Work : MonoBehaviour
     private void TriggerPression()
     {
         _workValue = 10f;
-        _audioDispatcher.PlayAudio(AudioType.Boss);
+        _audioSourceBoss.Play();
         _animator.SetTrigger("Detected");
         
         BossArrival?.Invoke();
