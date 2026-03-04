@@ -3,11 +3,9 @@ using System.Collections;
 
 public class DetectionSystem : MonoBehaviour
 {
-    
     [SerializeField] InteractionObject interactObject;
     [SerializeField] ThermometrePression thermometrePression;
     [SerializeField] PeopleHit _peopleHit;
-   
 
     [SerializeField] Animator _StarsAnimator;
     [SerializeField] Animator _BustedAnimator;
@@ -15,27 +13,30 @@ public class DetectionSystem : MonoBehaviour
     [SerializeField] Animator _AttentionAnimator;
     [SerializeField] AudioDispatcher _AudioDispatcher;
 
-    //temps entre les verif
     public float MinDelay = 5f;
     public float MaxDelay = 15f;
-    
-    //temps pendant les vérifs
     public float MinVerificationTime = 1f;
     public float MaxVerificationTime = 3f;
-    
-    //temps stuned
     public float StunedTime = 3f;
     public bool IsInjured = false;
-    
     public int NbHitForLevelUp = 5;
     private bool attentionactivated = false;
-    
-    
-    
-    // récupérer variable du joueur : si il travaille ou si il fait des betises
-    // récupérer variable du joueur : variable qui illustre le nombre de fois qu'il a embêté des gens. Si beaucoup, alors fréquence augmente
-    // récupérer la fonction qui augmente la jauge de pression
-    
+
+    // --- AJOUT : Sprites par état ---
+    [Header("Sprites États")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite idleSprite;
+    [SerializeField] private Sprite detectingSprite;
+    [SerializeField] private Sprite alertSprite;
+    [SerializeField] private Sprite stunnedSprite;
+
+    private void SetSprite(Sprite sprite)
+    {
+        if (spriteRenderer != null && sprite != null)
+            spriteRenderer.sprite = sprite;
+    }
+    // --- FIN AJOUT ---
+
     void Start()
     {
         StartDetection();
@@ -45,58 +46,60 @@ public class DetectionSystem : MonoBehaviour
     {
         _peopleHit.OnPlayerHit += Injured;
     }
+
     private void OnDisable()
     {
         _peopleHit.OnPlayerHit -= Injured;
     }
+
     void Update()
     {
         //LevelUpDifficulty();
     }
-    
+
     IEnumerator RandomDetection()
     {
         while (!IsInjured)
         {
-            float DetectionDelay = Random.Range(MinDelay, MaxDelay+1);
+            float DetectionDelay = Random.Range(MinDelay, MaxDelay + 1);
             Debug.Log(DetectionDelay);
             Debug.Log("Attend");
             yield return new WaitForSeconds(DetectionDelay);
             yield return StartCoroutine(TriggerDetection());
             LevelUpDifficulty();
-            // l'employer se retourne
             _AudioDispatcher.PlayAudio(AudioType.Surpris);
         }
     }
 
     IEnumerator TriggerDetection()
     {
-        float verificationTime= Random.Range(MinVerificationTime, MaxVerificationTime + 1);
+        float verificationTime = Random.Range(MinVerificationTime, MaxVerificationTime + 1);
         float timer = 0f;
         Debug.Log(verificationTime);
-        GetComponent<MeshRenderer>().material.color = Color.red;
         _InterrogationAnimator.SetTrigger("InDetection");
         attentionactivated = true;
+        SetSprite(detectingSprite); // AJOUT
+
         while (timer < verificationTime)
         {
             timer += Time.deltaTime;
             Debug.Log("regarde");
             if (!interactObject.isObjectHidden && interactObject.isHandOccupied)
-            {  
+            {
                 if (attentionactivated)
                 {
-                    
                     thermometrePression.AugmenterPression();
                     _AttentionAnimator.SetTrigger("Detected");
                     _BustedAnimator.SetTrigger("Detected");
                     _AudioDispatcher.PlayAudio(AudioType.Busted);
+                    SetSprite(alertSprite); // AJOUT
                 }
                 attentionactivated = false;
-                // je sais pas si ca va marcher
             }
             yield return null;
         }
-        GetComponent<MeshRenderer>().material.color = Color.white;
+        
+        SetSprite(idleSprite); // AJOUT
         Debug.Log("fin de verification");
     }
 
@@ -129,8 +132,8 @@ public class DetectionSystem : MonoBehaviour
         IsInjured = true;
         StopDetection();
         Debug.Log("STOP");
-        GetComponent<MeshRenderer>().material.color = Color.green;
         _StarsAnimator.SetTrigger("IsStunned");
+        SetSprite(stunnedSprite); // AJOUT
         StartCoroutine(StunnedEmployee());
     }
 
@@ -140,7 +143,7 @@ public class DetectionSystem : MonoBehaviour
         StartDetection();
         Debug.Log("STUN");
         IsInjured = false;
-        GetComponent<MeshRenderer>().material.color = Color.white;
         _StarsAnimator.SetTrigger("EndStunned");
+        SetSprite(idleSprite); // AJOUT
     }
 }
