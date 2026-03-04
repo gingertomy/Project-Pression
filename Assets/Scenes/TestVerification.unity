@@ -1983,7 +1983,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ea10e459cb86714a8e9e1566de5b4dc, type: 3}
---- !u!1001 &461786069
+--- !u!1001 &458608601
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1993,15 +1993,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5792748
+      value: -12.233659
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.177561
+      value: 5.6246467
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.896882
+      value: -12.334924
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2031,10 +2031,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4265616950509960259, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e74911b0816ab924898b1f54172749e7, type: 2}
+    - target: {fileID: -739504554070823624, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e74911b0816ab924898b1f54172749e7, type: 2}
     - target: {fileID: 919132149155446097, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
       propertyPath: m_Name
       value: SM_Piece
       objectReference: {fileID: 0}
+    - target: {fileID: 2830346650135594608, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e74911b0816ab924898b1f54172749e7, type: 2}
     - target: {fileID: 4295469918938017531, guid: 15b7d57527b3e4740b2fe6031533660f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -5436,4 +5448,4 @@ SceneRoots:
   - {fileID: 370207781}
   - {fileID: 1106017832}
   - {fileID: 2070101823}
-  - {fileID: 461786069}
+  - {fileID: 458608601}
